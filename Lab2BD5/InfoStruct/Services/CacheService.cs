@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InfoStruct;
 using Lab2BD5;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace InfoStruct
+namespace InfoStruct.Services
 {
-    public class CacheService<T> where T : class, ITable
+    public abstract class CacheService<T> where T : class, ITable
     {
         protected const int rowsNumber = 20;
         protected HeatSchemeStorageContext _heatSchemeStorageContext;
