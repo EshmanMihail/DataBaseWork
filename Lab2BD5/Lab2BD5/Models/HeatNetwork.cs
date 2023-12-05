@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab2BD5
 {
-    public partial class HeatNetwork
+    public partial class HeatNetwork : ITable
     {
         public HeatNetwork()
         {
@@ -22,5 +22,7 @@ namespace Lab2BD5
         public virtual ICollection<HeatPoint> HeatPoint { get; set; }
         public virtual ICollection<HeatWell> HeatWell { get; set; }
         public virtual Enterprise Enterprise { get; set; }
+
+        public int ID => NetworkId;
     }
 }

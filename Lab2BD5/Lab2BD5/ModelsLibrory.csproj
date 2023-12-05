@@ -256,6 +256,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITable.cs" />
     <Compile Include="Models\Enterprise.cs" />
     <Compile Include="Models\HeatConsumer.cs" />
     <Compile Include="Models\HeatNetwork.cs" />

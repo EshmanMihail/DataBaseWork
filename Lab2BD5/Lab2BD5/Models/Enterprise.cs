@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab2BD5
 {
-    public partial class Enterprise
+    public partial class Enterprise : ITable
     {
         public Enterprise()
         {
@@ -15,5 +15,7 @@ namespace Lab2BD5
         public string ManagementOrganization { get; set; }
 
         public virtual ICollection<HeatNetwork> HeatNetwork { get; set; }
+
+        public int ID => EnterpriseId;
     }
 }

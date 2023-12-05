@@ -117,7 +117,9 @@ namespace MainProgram
                 .OrderBy(x => x.EnterpriseId)
                 .Select(x => new { x.EnterpriseId, x.EnterpriseName })
                 .LastOrDefault();
+
             int lastId = lastEnterprice.EnterpriseId + 1;
+
             Console.WriteLine($"Последняя компания до добавления:\n{lastEnterprice}");
 
             Enterprise enterprise = new Enterprise 
@@ -135,6 +137,7 @@ namespace MainProgram
                 .LastOrDefault();
             Console.WriteLine($"Последняя компания после добавления:\n{lastEnterprice}");
         }
+
         private static void Task7(HeatSchemeStorageContext db)
         {
             var lastHeatNerwork = db.HeatNetwork
@@ -165,6 +168,7 @@ namespace MainProgram
                 .LastOrDefault();
             Console.WriteLine($"Последняя тепловая сеть после добавления:\n{lastHeatNerwork}");
         }
+
         private static void Task8(HeatSchemeStorageContext db)
         {
             var lastSection = db.PipelineSection
@@ -180,6 +184,7 @@ namespace MainProgram
                 .LastOrDefault();
             Console.WriteLine($"Последный тепловой трубопровод после удаления:\n{lastSection}");
         }
+
         private static void Task9(HeatSchemeStorageContext db)
         {
             var lastHeatPoint = db.HeatPoint
@@ -209,6 +214,9 @@ namespace MainProgram
                 .LastOrDefault();
             Console.WriteLine($"Последняя тепловая точка после удаления:\n{lastHeatPoint.PointId}");
         }
+
+
+
         private static void Task10(HeatSchemeStorageContext db)
         {
             var customersToUpdate = db.HeatConsumer.Where(x => x.CalculatedPower <= 10);

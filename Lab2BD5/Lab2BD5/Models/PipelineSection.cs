@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab2BD5
 {
-    public partial class PipelineSection
+    public partial class PipelineSection : ITable
     {
         public int SectionId { get; set; }
         public int? SectionNumber { get; set; }
@@ -16,5 +16,7 @@ namespace Lab2BD5
 
         public virtual HeatPoint EndNodeNumberNavigation { get; set; }
         public virtual HeatPoint StartNodeNumberNavigation { get; set; }
+
+        public int ID => SectionId;
     }
 }

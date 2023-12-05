@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lab2BD5
 {
-    public partial class HeatConsumer
+    public partial class HeatConsumer : ITable
     {
         public int ConsumerId { get; set; }
         public string ConsumerName { get; set; }
@@ -12,5 +12,7 @@ namespace Lab2BD5
         public decimal? CalculatedPower { get; set; }
 
         public virtual HeatNetwork Network { get; set; }
+
+        public int ID => ConsumerId;
     }
 }
