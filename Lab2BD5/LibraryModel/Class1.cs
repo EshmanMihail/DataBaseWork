@@ -1,4 +1,4 @@
-﻿namespace InfoStruct.Middlewares
+﻿namespace LibraryModel
 {
     public class Class1
     {
