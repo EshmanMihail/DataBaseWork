@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Views;
 
 public partial class ViewPipelineSection
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Models;
 
-public partial class PipelineSection
+public partial class PipelineSection : ITableSql
 {
     public int SectionId { get; set; }
 
@@ -24,4 +24,6 @@ public partial class PipelineSection
     public virtual HeatPoint? EndNodeNumberNavigation { get; set; }
 
     public virtual HeatPoint? StartNodeNumberNavigation { get; set; }
+
+    public int ID => SectionId;
 }

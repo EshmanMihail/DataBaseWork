@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Models;
 
-public partial class HeatNetwork
+public partial class HeatNetwork : ITableSql
 {
     public int NetworkId { get; set; }
 
@@ -22,4 +22,6 @@ public partial class HeatNetwork
     public virtual ICollection<HeatPoint> HeatPoints { get; set; } = new List<HeatPoint>();
 
     public virtual ICollection<HeatWell> HeatWells { get; set; } = new List<HeatWell>();
+
+    public int ID => NetworkId;
 }

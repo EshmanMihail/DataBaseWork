@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Models;
 
-public partial class Enterprise
+public partial class Enterprise : ITableSql
 {
     public int EnterpriseId { get; set; }
 
@@ -12,4 +12,6 @@ public partial class Enterprise
     public string? ManagementOrganization { get; set; }
 
     public virtual ICollection<HeatNetwork> HeatNetworks { get; set; } = new List<HeatNetwork>();
+
+    public int ID => EnterpriseId;
 }

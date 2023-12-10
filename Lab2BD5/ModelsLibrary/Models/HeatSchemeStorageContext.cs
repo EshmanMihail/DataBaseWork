@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ModelsLibrary.Views;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Models;
 
 public partial class HeatSchemeStorageContext : DbContext
 {

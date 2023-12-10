@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Models;
 
-public partial class HeatWell
+public partial class HeatWell : ITableSql
 {
     public int WellId { get; set; }
 
@@ -14,4 +14,6 @@ public partial class HeatWell
     public int? NodeNumber { get; set; }
 
     public virtual HeatNetwork? Network { get; set; }
+
+    public int ID => WellId;
 }

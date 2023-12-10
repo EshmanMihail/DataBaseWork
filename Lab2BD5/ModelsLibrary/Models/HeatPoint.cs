@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModelsLibrary;
+namespace ModelsLibrary.Models;
 
-public partial class HeatPoint
+public partial class HeatPoint : ITableSql
 {
     public int PointId { get; set; }
 
@@ -18,4 +18,6 @@ public partial class HeatPoint
     public virtual ICollection<PipelineSection> PipelineSectionEndNodeNumberNavigations { get; set; } = new List<PipelineSection>();
 
     public virtual ICollection<PipelineSection> PipelineSectionStartNodeNumberNavigations { get; set; } = new List<PipelineSection>();
+
+    public int ID => PointId;
 }

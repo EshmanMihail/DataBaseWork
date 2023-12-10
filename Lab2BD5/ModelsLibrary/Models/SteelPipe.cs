@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ModelsLibrary;
 
-public partial class SteelPipe
+public partial class SteelPipe : ITableSql
 {
     public int PipeId { get; set; }
 
@@ -14,4 +14,6 @@ public partial class SteelPipe
     public decimal? LinearInternalVolume { get; set; }
 
     public decimal? LinearWeight { get; set; }
+
+    public int ID => PipeId;
 }
