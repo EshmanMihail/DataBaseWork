@@ -48,6 +48,7 @@ internal class Program
         app.UseRouting();
         app.UseAuthorization();
         app.MapRazorPages();
+        app.UseSession();
 
         app.Map("/Enterprice", Middlewares.Tables.ShowEnterprice);
         app.Map("/HeatConsumer", Middlewares.Tables.ShowConsumer);

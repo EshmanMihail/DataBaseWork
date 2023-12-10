@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using InfoStruct.Sessions;
 
 namespace InfoStruct.MiddlewaresFolder
 {
@@ -47,7 +48,44 @@ namespace InfoStruct.MiddlewaresFolder
             {
                 app.Run(async context =>
                 {
+                    // из-за сессии теперь эта форма не позволяет делать больше одного поиска.
+                    // Оставил потому что иначе пропадёт фишка использования сессий.
 
+                    var searchSession = context.Session.Get<SessionSearchStuff>("searchSession") ?? new SessionSearchStuff();
+
+                    string chosenTable;
+                    string chosenColumn;
+                    string textForSearch;
+                    if (searchSession.isSaved)
+                    {
+
+                        chosenTable = searchSession.tableName;
+                        chosenColumn = searchSession.columnName;
+                        textForSearch = searchSession.textForSearch;
+                    }
+                    else
+                    {
+                        chosenTable = context.Request.Query["choosingList"];
+                        chosenColumn = context.Request.Query["column"];
+                        textForSearch = context.Request.Query["textForSearch"];
+                    }
+
+                    string answer = GetDefaultForm(chosenTable, chosenColumn, textForSearch, 2);
+
+                    if (chosenTable is not null)
+                    {
+                        searchSession.tableName = chosenTable;
+                        searchSession.columnName = chosenColumn;
+                        searchSession.textForSearch = textForSearch;
+                        searchSession.isSaved = true;
+
+                        context.Session.Set("searchSession", searchSession);
+
+                        answer += $"Результат поиска в таблице {chosenTable} по столбцу {chosenColumn}:";
+                        answer += Find(chosenTable, chosenColumn, textForSearch, context);
+                    }
+
+                    await context.Response.WriteAsync(answer);
                 });
             }
 
