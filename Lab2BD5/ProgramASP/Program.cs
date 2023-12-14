@@ -3,7 +3,7 @@ using InfoStruct.Service;
 using Microsoft.Extensions.Caching.Memory;
 using ModelsLibrary.Models;
 
-internal class Program
+internal class Program//lab4 with idea
 {
     private static void Main(string[] args)
     {
