@@ -35,7 +35,11 @@ internal class Program//lab4 with idea
             }
         );
 
+       // builder.Services.AddControllers();  // добавляем поддержку контроллеров
+
         var app = builder.Build();
+
+        
 
         if (!app.Environment.IsDevelopment())
         {
