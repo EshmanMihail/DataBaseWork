@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InfoStruct.Service;
+using Microsoft.AspNetCore.Mvc;
+using ModelsLibrary.Models;
 
 namespace ProgramASP.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
+        private HeatSchemeStorageContext context;
+        public HomeController([FromServices] HeatSchemeStorageContext context) 
         {
-            return "hello world!";
+            this.context = context;
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }
