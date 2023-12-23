@@ -3,7 +3,7 @@ using InfoStruct.Service;
 using Microsoft.Extensions.Caching.Memory;
 using ModelsLibrary.Models;
 
-internal class Program//lab4 with idea
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -23,6 +23,10 @@ internal class Program//lab4 with idea
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        app.MapControllerRoute(
+            name: "Enterprise",
+            pattern: "{controller=Enterprise}/{action=ShowTable}/{id?}");
 
         app.Run();
     }

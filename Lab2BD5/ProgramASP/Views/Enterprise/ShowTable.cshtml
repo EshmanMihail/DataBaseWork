@@ -1,0 +1,76 @@
+﻿@using ModelsLibrary.Models;
+@{
+    var enterprises = ViewBag.data as List<Enterprise>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enterprises</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".edit-button").click(
+                function () {
+                    var row = $(this).closest("tr");
+                    var id = row.find(".enterprise-id").text();
+                    var name = row.find(".enterprise-name").text();
+                    var organization = row.find(".management-organization").text();
+
+                    $("#selected-data [name='id']").val(id);
+                    $("#selected-data [name='name']").val(name);
+                    $("#selected-data [name='organization']").val(organization);
+                }
+            );
+        });
+    </script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .table-container {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список достижений</h1>
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Организация</th>
+                    <th>Действия</th>
+                </tr>
+
+                @foreach (Enterprise enterprise in enterprises)
+                {
+                    <tr>
+                        <td class="enterprise-id">@enterprise.ID</td>
+                        <td class="enterprise-name">@enterprise.EnterpriseName</td>
+                        <td class="management-organization">@enterprise.ManagementOrganization</td>
+                        <td><button class="edit-button">Редактировать</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="selected-data">
+            <h2>Выбранные данные</h2>
+            <form action="/Enterprise/Update" method="post">
+                <label for="id">Код:</label>
+                <input type="text" name="id" readonly>
+                <br>
+                <label for="name">Название:</label>
+                <input type="text" name="name">
+                <br>
+                <label for="organization">Организация:</label>
+                <input type="text" name="organization">
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

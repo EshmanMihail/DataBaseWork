@@ -1,0 +1,18 @@
+﻿@{
+    List<string> list = ViewBag.List;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>METANIT.COM</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h2>About Page</h2>
+    <h2>@foreach(string str in list)
+        {
+            <li>@str</li>
+        }
+    </h2>
+</body>
+</html>
