@@ -1,0 +1,119 @@
+﻿@using ModelsLibrary.Models;
+@{
+    var pipelineSections = ViewBag.data as List<PipelineSection>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pipeline Sections</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".edit-button").click(
+                function () {
+                    var row = $(this).closest("tr");
+                    var id = row.find(".section-id").text();
+                    var sectionNumber = row.find(".section-number").text();
+                    var startNodeNumber = row.find(".start-node-number").text();
+                    var endNodeNumber = row.find(".end-node-number").text();
+                    var pipelineLength = row.find(".pipeline-length").text();
+                    var diameter = row.find(".diameter").text();
+                    var thickness = row.find(".thickness").text();
+                    var lastRepairDate = row.find(".last-repair-date").text();
+
+                    $("#selected-data [name='sectionId']").val(id);
+                    $("#selected-data [name='sectionNumber']").val(sectionNumber);
+                    $("#selected-data [name='startNodeNumber']").val(startNodeNumber);
+                    $("#selected-data [name='endNodeNumber']").val(endNodeNumber);
+                    $("#selected-data [name='pipelineLength']").val(pipelineLength);
+                    $("#selected-data [name='diameter']").val(diameter);
+                    $("#selected-data [name='thickness']").val(thickness);
+                    $("#selected-data [name='lastRepairDate']").val(lastRepairDate);
+                }
+            );
+        });
+    </script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .table-container {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <p>
+            <a href='@Url.Action("Create", "PipelineSection")'>Добавить секцию</a>
+            <a href='@Url.Action("Delete", "PipelineSection")'>Удалить секцию</a>
+            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+        </p>
+    </h1>
+    <h1>Список секций</h1>
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Номер секции</th>
+                    <th>Номер начального узла</th>
+                    <th>Номер конечного узла</th>
+                    <th>Длина трубопровода</th>
+                    <th>Диаметр</th>
+                    <th>Толщина</th>
+                    <th>Дата последнего ремонта</th>
+                    <th>Действия</th>
+                </tr>
+
+                @foreach (PipelineSection pipeline in pipelineSections)
+                {
+                    <tr>
+                        <td class="section-id">@pipeline.SectionId</td>
+                        <td class="section-number">@pipeline.SectionNumber</td>
+                        <td class="start-node-number">@pipeline.StartNodeNumber</td>
+                        <td class="end-node-number">@pipeline.EndNodeNumber</td>
+                        <td class="pipeline-length">@pipeline.PipelineLength</td>
+                        <td class="diameter">@pipeline.Diameter</td>
+                        <td class="thickness">@pipeline.Thickness</td>
+                        <td class="last-repair-date">@pipeline.LastRepairDate</td>
+                        <td><button class="edit-button">Редактировать</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="selected-data">
+            <h2>Выбранные данные</h2>
+            <form action="/PipelineSection/Update" method="post">
+                <label for="sectionId">ID:</label>
+                <input type="text" name="sectionId" readonly>
+                <br>
+                <label for="sectionNumber">Номер секции:</label>
+                <input type="number" name="sectionNumber" required>
+                <br>
+                <label for="startNodeNumber">Номер начального узла:</label>
+                <input type="number" name="startNodeNumber" required>
+                <br>
+                <label for="endNodeNumber">Номер конечного узла:</label>
+                <input type="number" name="endNodeNumber" required>
+                <br>
+                <label for="pipelineLength">Длина трубопровода:</label>
+                <input type="number" name="pipelineLength" step="0.01"min="0" required>
+                <br>
+                <label for="diameter">Диаметр:</label>
+                <input type="number" name="diameter" step="0.01" min="0" required>
+                <br>
+                <label for="thickness">Толщина:</label>
+                <input type="number" name="thickness" step="0.01" min="0" required>
+                <br>
+                <label for="lastRepairDate">Дата последнего ремонта:</label>
+                <input type="date" name="lastRepairDate" required>
+                <br>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

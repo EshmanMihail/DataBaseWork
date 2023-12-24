@@ -5,20 +5,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>METANIT.COM</title>
+    <title>Heat Station</title>
     <meta charset="utf-8" />
 </head>
 <body>
-    <h2>User Form</h2>
-    <form method="post">
-        <p>
-            <label for="language">Введите элемент:</label>
-            <input type="text" name="language" />
-        </p>
-        <p>
-            <input type="submit" value="Добавить" />
-        </p>
-    </form>
-    <p><a href='@Url.Action("ShowTable", "Enterprise")'>О сайте</a></p>
+    <h1>Выберите таблицу</h1>
+    <p><a href='@Url.Action("ShowTable", "Enterprise")'>Компании</a></p>
+    <p><a href='@Url.Action("ShowTable", "HeatNetwork")'>Тепловые сети</a></p>
+    <p><a href='@Url.Action("ShowTable", "HeatConsumer")'>Клиенты</a></p>
+    <p><a href='@Url.Action("ShowTable", "HeatWell")'>Тепловые котлы</a></p>
+    <p><a href='@Url.Action("ShowTable", "HeatPoint")'>Тепловые точки</a></p>
+    <p><a href='@Url.Action("ShowTable", "PipelineSection")'>Трубопроводы</a></p>
+    <p><a href='@Url.Action("ShowTable", "SteelPipe")'>Железные трубы</a></p>
+    <h1>Выберите таблицу для поиска по столбцам</h1>
+    <table border="1">
+        <tr>
+            <th>Таблица</th>
+            <th>Поиск с куки</th>
+            <th>Поиск с сессией</th>
+        </tr>
+        <tr>
+            <td>Компания</td>
+            <td><a href='@Url.Action("Search", "Enterprise")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "Enterprise")'>Поиск</a></td>
+        </tr>
+        <tr>
+            <td>Сеть</td>
+            <td><a href='@Url.Action("Search", "HeatNetwork")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatNetwork")'>Поиск</a></td>
+        </tr>
+        <tr>
+            <td>Клиенты</td>
+            <td><a href='@Url.Action("Search", "HeatConsumer")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatConsumer")'>Поиск</a></td>
+        </tr>
+        <tr>
+            <td>Колодцы</td>
+            <td><a href='@Url.Action("Search", "HeatWell")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatWell")'>Поиск</a></td>
+        </tr>
+        <tr>
+            <td>Тепловые точки</td>
+            <td><a href='@Url.Action("Search", "HeatPoint")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatPoint")'>Поиск</a></td>
+        </tr>
+        <tr>
+            <td>Трудопровод</td>
+            <td><a href='@Url.Action("Search", "PipelineSection")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "PipelineSection")'>Поиск</a></td>
+        </tr>
+        <tr>
+            <td>Трубы</td>
+            <td><a href='@Url.Action("Search", "SteelPipe")'>Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "SteelPipe")'>Поиск</a></td>
+        </tr>
+    </table>
+
 </body>
 </html>

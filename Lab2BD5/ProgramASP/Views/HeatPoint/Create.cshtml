@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление новой записи</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Добавить точку</h1>
+    <form action="/HeatPoint/Create" method="post">
+        <label for="pointName">Название:</label>
+        <input type="text" name="pointName" required>
+        <br>
+        <label for="networkId">Код сети:</label>
+        <input type="number" name="networkId" required>
+        <br>
+        <label for="nodeNumber">Номер узла:</label>
+        <input type="number" name="nodeNumber" required>
+        <br>
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,93 @@
+﻿@using ModelsLibrary.Models;
+@{
+    var heatWells = ViewBag.data as List<HeatWell>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heat Wells</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".edit-button").click(
+                function () {
+                    var row = $(this).closest("tr");
+                    var id = row.find(".well-id").text();
+                    var name = row.find(".well-name").text();
+                    var networkId = row.find(".network-id").text();
+                    var nodeNumber = row.find(".node-number").text();
+
+                    $("#selected-data [name='wellId']").val(id);
+                    $("#selected-data [name='wellName']").val(name);
+                    $("#selected-data [name='networkId']").val(networkId);
+                    $("#selected-data [name='nodeNumber']").val(nodeNumber);
+                }
+            );
+        });
+    </script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .table-container {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <p>
+            <a href='@Url.Action("Create", "HeatWell")'>Добавить скважину</a>
+            <a href='@Url.Action("Delete", "HeatWell")'>Удалить скважину</a>
+            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+        </p>
+    </h1>
+    <h1>Список скважин</h1>
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Код сети</th>
+                    <th>Имя сети</th>
+                    <th>Номер узла</th>
+                    <th>Действия</th>
+                </tr>
+
+                @foreach (HeatWell well in heatWells)
+                {
+                    <tr>
+                        <td class="well-id">@well.WellId</td>
+                        <td class="well-name">@well.WellName</td>
+                        <td class="network-id">@well.NetworkId</td>
+                        <td>@well.Network?.NetworkName</td>
+                        <td class="node-number">@well.NodeNumber</td>
+                        <td><button class="edit-button">Редактировать</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="selected-data">
+            <h2>Выбранные данные</h2>
+            <form action="/HeatWell/Update" method="post">
+                <label for="wellId">Код:</label>
+                <input type="text" name="wellId" readonly>
+                <br>
+                <label for="wellName">Название:</label>
+                <input type="text" name="wellName" required>
+                <br>
+                <label for="networkId">Код сети:</label>
+                <input type="number" name="networkId" required>
+                <br>
+                <label for="nodeNumber">Номер узла:</label>
+                <input type="number" name="nodeNumber" required>
+                <br>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

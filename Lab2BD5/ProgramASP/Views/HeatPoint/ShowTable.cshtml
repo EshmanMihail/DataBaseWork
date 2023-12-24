@@ -1,0 +1,93 @@
+﻿@using ModelsLibrary.Models;
+@{
+    var heatPoints = ViewBag.data as List<HeatPoint>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heat Points</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".edit-button").click(
+                function () {
+                    var row = $(this).closest("tr");
+                    var id = row.find(".point-id").text();
+                    var name = row.find(".point-name").text();
+                    var networkId = row.find(".network-id").text();
+                    var nodeNumber = row.find(".node-number").text();
+
+                    $("#selected-data [name='pointId']").val(id);
+                    $("#selected-data [name='pointName']").val(name);
+                    $("#selected-data [name='networkId']").val(networkId);
+                    $("#selected-data [name='nodeNumber']").val(nodeNumber);
+                }
+            );
+        });
+    </script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .table-container {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <p>
+            <a href='@Url.Action("Create", "HeatPoint")'>Добавить точку</a>
+            <a href='@Url.Action("Delete", "HeatPoint")'>Удалить точку</a>
+            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+        </p>
+    </h1>
+    <h1>Список точек</h1>
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Код сети</th>
+                    <th>Имя сети</th>
+                    <th>Номер узла</th>
+                    <th>Действия</th>
+                </tr>
+
+                @foreach (HeatPoint point in heatPoints)
+                {
+                    <tr>
+                        <td class="point-id">@point.PointId</td>
+                        <td class="point-name">@point.PointName</td>
+                        <td class="network-id">@point.NetworkId</td>
+                        <td>@point.Network?.NetworkName</td>
+                        <td class="node-number">@point.NodeNumber</td>
+                        <td><button class="edit-button">Редактировать</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="selected-data">
+            <h2>Выбранные данные</h2>
+            <form action="/HeatPoint/Update" method="post">
+                <label for="pointId">Код:</label>
+                <input type="text" name="pointId" readonly>
+                <br>
+                <label for="pointName">Название:</label>
+                <input type="text" name="pointName" required>
+                <br>
+                <label for="networkId">Код сети:</label>
+                <input type="number" name="networkId" required>
+                <br>
+                <label for="nodeNumber">Номер узла:</label>
+                <input type="number" name="nodeNumber" required>
+                <br>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

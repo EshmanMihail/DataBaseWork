@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление новой записи</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Добавить трубу</h1>
+    <form action="/SteelPipe/Create" method="post">
+        <label for="outerDiameter">Внешний диаметр:</label>
+        <input type="text" name="outerDiameter" required>
+        <br>
+        <label for="thickness">Толщина:</label>
+        <input type="text" name="thickness" required>
+        <br>
+        <label for="linearInternalVolume">Линейный внутренний объем:</label>
+        <input type="text" name="linearInternalVolume" required>
+        <br>
+        <label for="linearWeight">Линейная масса:</label>
+        <input type="text" name="linearWeight" required>
+        <br>
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>

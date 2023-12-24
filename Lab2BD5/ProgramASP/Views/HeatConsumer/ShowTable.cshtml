@@ -1,0 +1,100 @@
+﻿@using ModelsLibrary.Models;
+@{
+    var heatConsumers = ViewBag.data as List<HeatConsumer>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heat Consumers</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".edit-button").click(
+                function () {
+                    var row = $(this).closest("tr");
+                    var id = row.find(".consumer-id").text();
+                    var name = row.find(".consumer-name").text();
+                    var networkId = row.find(".network-id").text();
+                    var nodeNumber = row.find(".node-number").text();
+                    var calculatedPower = row.find(".calculated-power").text();
+
+                    $("#selected-data [name='consumerId']").val(id);
+                    $("#selected-data [name='consumerName']").val(name);
+                    $("#selected-data [name='networkId']").val(networkId);
+                    $("#selected-data [name='nodeNumber']").val(nodeNumber);
+                    $("#selected-data [name='calculatedPower']").val(calculatedPower);
+                }
+            );
+        });
+    </script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .table-container {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <p>
+            <a href='@Url.Action("Create", "HeatConsumer")'>Добавить потребителя</a>
+            <a href='@Url.Action("Delete", "HeatConsumer")'>Удалить потребителя</a>
+            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a></p>
+        </p>
+    </h1>
+    <h1>Список потребителей</h1>
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Код</th>
+                    <th>Имя</th>
+                    <th>Код сети</th>
+                    <th>Имя сети</th>
+                    <th>Номер узла</th>
+                    <th>Расчетная мощность</th>
+                    <th>Действия</th>
+                </tr>
+
+                @foreach (HeatConsumer consumer in heatConsumers)
+                {
+                    <tr>
+                        <td class="consumer-id">@consumer.ConsumerId</td>
+                        <td class="consumer-name">@consumer.ConsumerName</td>
+                        <td class="network-id">@consumer.NetworkId</td>
+                        <td>@consumer.Network?.NetworkName</td>
+                        <td class="node-number">@consumer.NodeNumber</td>
+                        <td class="calculated-power">@consumer.CalculatedPower</td>
+                        <td><button class="edit-button">Редактировать</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="selected-data">
+            <h2>Выбранные данные</h2>
+            <form action="/HeatConsumer/Update" method="post">
+                <label for="consumerId">Код:</label>
+                <input type="text" name="consumerId" readonly>
+                <br>
+                <label for="consumerName">Название:</label>
+                <input type="text" name="consumerName" required>
+                <br>
+                <label for="networkId">Код сети:</label>
+                <input type="number" name="networkId" required>
+                <br>
+                <label for="nodeNumber">Номер узла:</label>
+                <input type="number" name="nodeNumber" required>
+                <br>
+                <label for="calculatedPower">Расчетная мощность:</label>
+                <input type="number" name="calculatedPower" step="0.01" required>
+                <br>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+﻿@using ModelsLibrary.Models;
+@{
+    var heatNetworks = ViewBag.data as List<HeatNetwork>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HeatNetworks</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".edit-button").click(
+                function () {
+                    var row = $(this).closest("tr");
+                    var networkId = row.find(".network-id").text();
+                    var networkName = row.find(".network-name").text();
+                    var networkNumber = row.find(".network-number").text();
+                    var enterpriseId = row.find(".enterprise-id").text();
+                    var networkType = row.find(".network-type").text();
+
+                    $("#selected-data [name='networkId']").val(networkId);
+                    $("#selected-data [name='networkName']").val(networkName);
+                    $("#selected-data [name='networkNumber']").val(networkNumber);
+                    $("#selected-data [name='enterpriseId']").val(enterpriseId);
+                    $("#selected-data [name='networkType']").val(networkType);
+                }
+            );
+        });
+    </script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .table-container {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <p>
+            <a href='@Url.Action("Create", "HeatNetwork")'>Добавить сеть</a>
+            <a href='@Url.Action("Delete", "HeatNetwork")'>Удалить сеть</a>
+            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+        </p>
+    </h1>
+    <h1>Список тепловых сетей</h1>
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Номер</th>
+                    <th>ID компании</th>
+                    <th>Имя компании</th>
+                    <th>Тип</th>
+                    <th>Действия</th>
+                </tr>
+                @foreach (HeatNetwork heatNetwork in heatNetworks)
+                {
+                    <tr>
+                        <td class="network-id">@heatNetwork.NetworkId</td>
+                        <td class="network-name">@heatNetwork.NetworkName</td>
+                        <td class="network-number">@heatNetwork.NetworkNumber</td>
+                        <td class="enterprise-id">@heatNetwork.EnterpriseId</td>
+                        <td>@heatNetwork.Enterprise?.EnterpriseName</td>
+                        <td class="network-type">@heatNetwork.NetworkType</td>
+                        <td><button class="edit-button">Редактировать</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div id="selected-data">
+            <h2>Выбранные данные</h2>
+            <form action="/HeatNetwork/Update" method="post">
+                <label for="networkId">Код:</label>
+                <input type="text" name="networkId" readonly>
+                <br>
+                <label for="networkName">Название:</label>
+                <input type="text" name="networkName" required>
+                <br>
+                <label for="networkNumber">Номер:</label>
+                <input type="number" name="networkNumber" required>
+                <br>
+                <label for="enterpriseId">ID компании:</label>
+                <input type="number" name="enterpriseId" required>
+                <br>
+                <label for="networkType">Тип:</label>
+                <input type="text" name="networkType" required>
+                <br>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

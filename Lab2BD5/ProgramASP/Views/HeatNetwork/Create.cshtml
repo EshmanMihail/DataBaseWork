@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление новой записи</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Добавление новой записи</h1>
+    <form action="/HeatNetwork/Create" method="post">
+        <label for="networkName">Название:</label>
+        <input type="text" name="networkName" required>
+        <br>
+        <label for="networkNumber">Номер:</label>
+        <input type="number" name="networkNumber" required>
+        <br>
+        <label for="enterpriseId">ID компании:</label>
+        <input type="number" name="enterpriseId" required>
+        <br>
+        <label for="networkType">Тип:</label>
+        <input type="text" name="networkType" required>
+        <br>
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>

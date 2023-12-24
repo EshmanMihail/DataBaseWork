@@ -17,7 +17,7 @@
                     var name = row.find(".enterprise-name").text();
                     var organization = row.find(".management-organization").text();
 
-                    $("#selected-data [name='id']").val(id);
+                    $("#selected-data [name='enterpriceId']").val(id);
                     $("#selected-data [name='name']").val(name);
                     $("#selected-data [name='organization']").val(organization);
                 }
@@ -35,7 +35,14 @@
     </style>
 </head>
 <body>
-    <h1>Список достижений</h1>
+    <h1>
+        <p>
+            <a href='@Url.Action("Create", "Enterprise")'>Добавить компанию</a>
+            <a href='@Url.Action("Delete", "Enterprise")'>Удалить компанию</a>
+            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+        </p>
+    </h1>
+    <h1>Список компаний</h1>
     <div class="container">
         <div class="table-container">
             <table border="1">
@@ -60,14 +67,15 @@
         <div id="selected-data">
             <h2>Выбранные данные</h2>
             <form action="/Enterprise/Update" method="post">
-                <label for="id">Код:</label>
-                <input type="text" name="id" readonly>
+                <label for="enterpriceId">Код:</label>
+                <input type="text" name="enterpriceId" readonly>
                 <br>
                 <label for="name">Название:</label>
-                <input type="text" name="name">
+                <input type="text" name="name" required>
                 <br>
                 <label for="organization">Организация:</label>
-                <input type="text" name="organization">
+                <input type="text" name="organization" required>
+                <br>
                 <button type="submit">Сохранить</button>
             </form>
         </div>

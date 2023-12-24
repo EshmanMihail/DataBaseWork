@@ -28,6 +28,24 @@ internal class Program
             name: "Enterprise",
             pattern: "{controller=Enterprise}/{action=ShowTable}/{id?}");
 
+        app.MapControllerRoute(
+            name: "HeatNetwork",
+            pattern: "{controller=HeatNetwork}/{action=ShowTable}/{id?}");
+
+        app.MapControllerRoute(
+            name: "HeatConsumer",
+            pattern: "{controller=HeatConsumer}/{action=ShowTable}/{id?}");
+
+        app.MapControllerRoute(
+            name: "HeatWell",
+            pattern: "{controller=HeatWell}/{action=ShowTable}/{id?}");
+        app.MapControllerRoute(
+            name: "PipelineSection",
+            pattern: "{controller=PipelineSection}/{action=ShowTable}/{id?}");
+        app.MapControllerRoute(
+            name: "SteelPipe",
+            pattern: "{controller=SteelPipe}/{action=ShowTable}/{id?}");
+
         app.Run();
     }
 }

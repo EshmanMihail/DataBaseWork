@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление новой записи</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Добавить точку</h1>
+    <form method="post" action="/PipelineSection/Create">
+
+        <label>Номер секции:</label>
+        <input type="text" name="sectionNumber" /><br>
+
+        <label>Номер начального узла:</label>
+        <input type="text" name="startNodeNumber" /><br>
+
+        <label>Номер конечного узла:</label>
+        <input type="text" name="endNodeNumber" /><br>
+
+        <label>Длина трубопровода:</label>
+        <input type="text" name="pipelineLength" /><br>
+
+        <label>Диаметр:</label>
+        <input type="text" name="diameter" /><br>
+
+        <label>Толщина:</label>
+        <input type="text" name="thickness" /><br>
+
+        <label>Дата последнего ремонта:</label>
+        <input type="date" name="lastRepairDate" /><br>
+
+        <input type="submit" value="Добавить" />
+    </form>
+</body>
+</html>

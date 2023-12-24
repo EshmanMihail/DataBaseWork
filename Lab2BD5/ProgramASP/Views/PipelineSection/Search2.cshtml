@@ -1,0 +1,28 @@
+﻿@{
+	var result = ViewBag.data as List<string> ?? new();
+	var text = ViewBag.text as string ?? "";
+}
+@using InfoStruct.Sessions;
+@model SessionSearchStuff;
+
+<form>
+	<label for="searchColumn">Выберите столбец для поиска:</label><br />
+	<select name="searchColumn">
+		<option value="PipelineLength" @(Model.columnName == "PipelineLength" ? "selected" : "")>PipelineLength</option>
+		<option value="Diameter" @(Model.columnName == "Diameter" ? "selected" : "")>Diameter</option>
+		<option value="Thickness" @(Model.columnName == "Thickness" ? "selected" : "")>Thickness</option>
+		<option value="LastRepairDate" @(Model.columnName == "LastRepairDate" ? "selected" : "")>LastRepairDate</option>
+	</select><br />
+
+	<label for="searchText">Введите текст для поиска:</label><br />
+	<input type="text" name="searchText" value="@Model.textForSearch" /><br />
+
+	<input type="submit" value="Найти" />
+</form>
+
+<div>
+	@foreach (var item in result)
+	{
+		<p>@item</p>
+	}
+</div>
