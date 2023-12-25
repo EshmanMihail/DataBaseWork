@@ -202,8 +202,6 @@ namespace ProgramASP.Controllers
 		private bool TryGetFromServer(SessionSearchStuff session, string searchColumn, string searchText)
 		{
 			if (searchColumn is null || searchText is null) return false;
-			//session.columnName = searchColumn;
-			//session.textForSearch = searchText;
 			session.Save(searchColumn, searchText, HttpContext, "searchSessionEnterprise");
 			return true;
 		}
