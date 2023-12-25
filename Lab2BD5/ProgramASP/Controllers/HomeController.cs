@@ -18,21 +18,5 @@ namespace ProgramASP.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public IActionResult Index(string language)
-        {
-            if (language != null)
-            {
-                list.Add(language);
-            }
-            return RedirectToAction("About");
-        }
-
-        public IActionResult About()
-        {
-            ViewBag.List = list;
-            return View();
-        }
     }
 }
