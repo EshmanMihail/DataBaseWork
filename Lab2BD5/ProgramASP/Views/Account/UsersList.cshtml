@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@{
+    var users = ViewBag.Users as List<IdentityUser>;
+}
+
+<h2>Список пользователей</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Номер телефона</th>
+            <th>Роль</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.PhoneNumber</td>
+                <td>@string.Join("", ViewData[$"Roles_{user.Id}"] as IList<string>)</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,7 +1,9 @@
 ﻿@{
-    string head = "Hello METANIT.COM!"; // определяем переменную head
-    string text = "ASP.NET Core Application";   // определяем переменную text
+    
 }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +62,23 @@
             <td><a href='@Url.Action("Search2", "SteelPipe")'>Поиск</a></td>
         </tr>
     </table>
-    <h1></h1>
     <p><a href='@Url.Action("RequirementsShow", "Requirements")'>Дополнительные требования</a></p>
+    <div>
+        <a href='@Url.Action("Login", "Account")'>Вход</a>
+        <a href='@Url.Action("Logout", "Account")'>Выход</a>
+        <a href='@Url.Action("Register", "Account")'>Регистрация</a>
+    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        var user = await UserManager.GetUserAsync(User);
+
+        if (await UserManager.IsInRoleAsync(user, "Admin"))
+        {
+            <h2>Пользователи</h2>
+            <p><a href='@Url.Action("UsersList", "Account")'>Список пользователей</a></p>
+            <p>Admin</p>
+        }
+    }
 </body>
 </html>

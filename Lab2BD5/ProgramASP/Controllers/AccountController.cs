@@ -17,6 +17,7 @@ namespace ProgramASP.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UsersList()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -47,6 +48,12 @@ namespace ProgramASP.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
 
         [HttpGet]
         public IActionResult Register() => View();
@@ -73,5 +80,7 @@ namespace ProgramASP.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult AccessDenied(string returnUrl) => RedirectToAction("Index", "Home");
     }
 }
