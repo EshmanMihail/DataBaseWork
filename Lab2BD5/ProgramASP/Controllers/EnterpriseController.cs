@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ModelsLibrary.Models;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProgramASP.Controllers
 {
@@ -25,7 +26,8 @@ namespace ProgramASP.Controllers
             return View();
         }
 
-		[HttpPost]
+        [Authorize]
+        [HttpPost]
         public IActionResult Update(int enterpriceId, string name, string organization)
         {
             if (enterpriceId != 0 && name != null && organization != null)

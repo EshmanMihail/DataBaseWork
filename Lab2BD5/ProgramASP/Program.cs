@@ -24,11 +24,18 @@ internal class Program
             .AddEntityFrameworkStores<HeatSchemeStorageContext>()
             .AddDefaultTokenProviders();
 
+        builder.Services.ConfigureApplicationCookie(options => {
+            options.LoginPath = "/Account/Login";
+        });
+
         var app = builder.Build();
 
         app.UseHttpsRedirection();
         app.UseSession();
         app.UseResponseCaching();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.MapControllerRoute(
             name: "default",

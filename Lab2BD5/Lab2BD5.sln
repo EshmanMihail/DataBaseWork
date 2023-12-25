@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramASP", "ProgramASP\ProgramASP.csproj", "{21C51FCF-85E1-426D-85CC-FE327C2CB9FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgramASP", "ProgramASP\ProgramASP.csproj", "{21C51FCF-85E1-426D-85CC-FE327C2CB9FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsLibrary", "ModelsLibrary\ModelsLibrary.csproj", "{4550DDFB-BF8D-45E2-A76A-41FEB1339D38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsLibrary", "ModelsLibrary\ModelsLibrary.csproj", "{4550DDFB-BF8D-45E2-A76A-41FEB1339D38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoStruct", "InfoStruct\InfoStruct.csproj", "{661DD3F5-B4EC-482C-9ED0-C13F463ABDB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfoStruct", "InfoStruct\InfoStruct.csproj", "{661DD3F5-B4EC-482C-9ED0-C13F463ABDB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
