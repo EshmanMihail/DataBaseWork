@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using ModelsLibrary.Views;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ModelsLibrary.Models;
 
-public partial class HeatSchemeStorageContext : DbContext
+public partial class HeatSchemeStorageContext : IdentityDbContext<IdentityUser>
 {
     public HeatSchemeStorageContext()
     {
@@ -44,6 +46,7 @@ public partial class HeatSchemeStorageContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Enterprise>(entity =>
         {
             entity.HasKey(e => e.EnterpriseId).HasName("PK__Enterpri__52DEA5462ED0C064");

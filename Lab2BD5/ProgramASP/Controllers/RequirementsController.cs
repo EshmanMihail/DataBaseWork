@@ -12,6 +12,12 @@ namespace ProgramASP.Controllers
             db = context;
         }
 
+        [HttpGet]
+        public IActionResult RequirementsShow()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult FirstTask()
         {
