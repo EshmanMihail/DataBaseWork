@@ -1,4 +1,5 @@
 ﻿using InfoStruct.Sessions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace ProgramASP.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(int pointId, string pointName, int networkId, int nodeNumber)
         {
             var network = db.HeatNetworks.Find(networkId);
@@ -50,12 +52,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(string pointName, int networkId, int nodeNumber)
         {
             var network = db.HeatNetworks.Find(networkId);
@@ -79,12 +83,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Delete()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int pointId) 
         {
             var point = db.HeatPoints.Find(pointId);

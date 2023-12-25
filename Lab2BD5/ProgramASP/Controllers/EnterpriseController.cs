@@ -26,8 +26,8 @@ namespace ProgramASP.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpPost]
+        [Authorize]
         public IActionResult Update(int enterpriceId, string name, string organization)
         {
             if (enterpriceId != 0 && name != null && organization != null)
@@ -49,12 +49,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(string enterpriseName, string organization)
         {
             var lastEnterprise = db.Enterprises.OrderBy(e => e.EnterpriseId).LastOrDefault();
@@ -74,12 +76,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Delete() 
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int enterpriceId)
         {
             var enterprise = db.Enterprises.Find(enterpriceId);

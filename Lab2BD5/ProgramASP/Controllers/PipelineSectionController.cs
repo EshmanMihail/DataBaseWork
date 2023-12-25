@@ -1,4 +1,5 @@
 ﻿using InfoStruct.Sessions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,9 @@ namespace ProgramASP.Controllers
             return View();
         }
 
+
         [HttpPost]
+        [Authorize]
         public IActionResult Update(int sectionId, int sectionNumber, int startNodeNumber, int endNodeNumber,
             decimal pipelineLength, decimal diameter, decimal thickness, DateOnly lastRepairDate)
         {
@@ -58,12 +61,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(int sectionNumber, int startNodeNumber, int endNodeNumber,
             decimal pipelineLength, decimal diameter, decimal thickness, DateOnly lastRepairDate)
         {
@@ -95,12 +100,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Delete()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int pipelineId)
         {
             var pipiline = db.PipelineSections.Find(pipelineId);

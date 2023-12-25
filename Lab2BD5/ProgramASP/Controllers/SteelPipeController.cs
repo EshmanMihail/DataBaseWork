@@ -1,4 +1,5 @@
 ﻿using InfoStruct.Sessions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModelsLibrary;
@@ -27,6 +28,7 @@ namespace ProgramASP.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Update(int pipeId, decimal outerDiameter, decimal thickness, decimal linearInternalVolume, decimal linearWeight)
         {
             if (pipeId != 0 && outerDiameter > 0 && thickness > 0 && linearInternalVolume > 0 && linearWeight > 0)
@@ -50,12 +52,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(decimal outerDiameter, decimal thickness, decimal linearInternalVolume, decimal linearWeight)
         {
             if (outerDiameter > 0 && thickness > 0 && linearInternalVolume > 0 && linearWeight > 0)
@@ -80,12 +84,14 @@ namespace ProgramASP.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult Delete()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int pipeId)
         {
             var steelPipe = db.SteelPipes.Find(pipeId);
