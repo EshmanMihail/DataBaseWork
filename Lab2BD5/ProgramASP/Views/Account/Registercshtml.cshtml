@@ -1,0 +1,27 @@
+﻿@using ProgramASP.ViewModels.AccountModels;
+@model RegisterViewModel
+<html>
+<head>
+    <title> Регистрация </title>
+    <link rel="stylesheet" type="text/css" href="/css/Register.css" />
+</head>
+<body>
+    <form method="post">
+        <div>
+            <label for="PhoneNumber">PhoneNumber:</label>
+            <input id="PhoneNumber" type="number" name="PhoneNumber" required />
+        </div>
+        <div>
+            <label for="Password">Пароль:</label>
+            <input id="Password" type="password" name="Password" required />
+        </div>
+        <div>
+            <label for="ConfirmPassword">Подтвердите пароль:</label>
+            <input id="ConfirmPassword" type="password" name="ConfirmPassword" required />
+        </div>
+        <button type="submit">Зарегистрироваться</button>
+
+        @Html.ValidationSummary(true, "", new { @class = "registration-errors" })
+    </form>
+</body>
+</html>
