@@ -77,7 +77,13 @@
         {
             <h2>Пользователи</h2>
             <p><a href='@Url.Action("UsersList", "Account")'>Список пользователей</a></p>
+            <li><a href='@Url.Action("Delete", "Account")'>Удалить пользователя</a></li>
+            <li><a href='@Url.Action("Update", "Account")'>Изменить пользователя</a></li>
             <p>Admin</p>
+        }
+        else
+        {
+            <p>User</p>
         }
     }
 </body>

@@ -2,23 +2,34 @@
 @{
     var users = ViewBag.Users as List<IdentityUser>;
 }
-
-<h2>Список пользователей</h2>
-
-<table border="1">
-    <thead>
-        <tr>
-            <th>Номер телефона</th>
-            <th>Роль</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in users)
-        {
+<html>
+<head>
+    <title>Все пользователи</title>
+    <link rel="stylesheet" type="text/css" href="/css/Login.css" />
+</head>
+<body>
+    <div>
+        <a href='@Url.Action("Index", "Home")'>На главную</a>
+        <a href='@Url.Action("Register", "Account")'>Зарегестрироваться</a>
+    </div>
+    <br>
+    <h2>Список пользователей</h2>
+    <table border="1">
+        <thead>
             <tr>
-                <td>@user.PhoneNumber</td>
-                <td>@string.Join("", ViewData[$"Roles_{user.Id}"] as IList<string>)</td>
+                <th>Номер телефона</th>
+                <th>Роль</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.PhoneNumber</td>
+                    <td>@string.Join("", ViewData[$"Roles_{user.Id}"] as IList<string>)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -82,5 +82,85 @@ namespace ProgramASP.Controllers
         }
 
         public IActionResult AccessDenied(string returnUrl) => RedirectToAction("Index", "Home");
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Update() => View();
+
+        public async Task<IActionResult> Update(UpdateAccountViewModel model)
+        {
+            IdentityUser user = await _userManager.FindByNameAsync(model.OldPhoneNumber);
+
+            if (user is null)
+            {
+
+                ModelState.AddModelError("", "Пользователь не найден.");
+                return View(model);
+            }
+
+            model.NewRights = model.NewRights ?? false;
+
+            user.PhoneNumber = model.NewPhoneNumber ?? user.PhoneNumber;
+            user.UserName = model.NewPhoneNumber ?? user.UserName;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+
+                foreach (var error in result.Errors)
+                {
+
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+
+            if ((bool)model.NewRights)
+            {
+
+                await _userManager.RemoveFromRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
+            else
+            {
+                await _userManager.RemoveFromRoleAsync(user, "Admin");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            return View();
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete() => View();
+
+        public async Task<IActionResult> Delete(DeleteAccountViewModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.PhoneNumber);
+
+            if (user is null)
+            {
+
+                ModelState.AddModelError("", "Пользователь не найден.");
+                return View(model);
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+
+                foreach (var error in result.Errors)
+                {
+
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View();
+        }
     }
 }

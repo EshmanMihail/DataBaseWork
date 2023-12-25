@@ -1,0 +1,35 @@
+﻿@using ProgramASP.ViewModels.AccountModels
+@model UpdateAccountViewModel
+
+<html>
+<head>
+    <title>Обновить пользователя</title>
+    <link rel="stylesheet" type="text/css" href="/css/Update.css" />
+</head>
+<body>
+    <div>
+        <a href='@Url.Action("Index", "Home")'>На главную</a>
+    </div>
+    <br>
+    <form method="post">
+        <div>
+            <label for="OldPhoneNumber">Введите старый номер телефона:</label>
+            <input type="number" id="OldPhoneNumber" name="OldPhoneNumber" required />
+        </div>
+
+        <div>
+            <label for="NewPhoneNumber">Введите новый номер телефона: </label>
+            <input type="number" id="NewPhoneNumber" name="NewPhoneNumber" />
+        </div>
+
+        <div>
+            <label for="NewRights">Добавить\убрать права:</label>
+            <input type="checkbox" id="NewRights" name="NewRights" value="true" />
+        </div>
+
+        <input type="submit" value="Обновить" />
+    </form>
+
+    @Html.ValidationSummary(true, "", new { @class = "update-errors" })
+</body>
+</html>
