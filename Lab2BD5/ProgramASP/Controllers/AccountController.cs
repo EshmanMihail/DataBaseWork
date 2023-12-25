@@ -9,19 +9,44 @@ namespace ProgramASP.Controllers
     public class AccountController : Controller
     {
         private UserManager<IdentityUser> _userManager;
+        private SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> UsersList()
         {
-            ViewBag.Users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.ToListAsync();
 
+            foreach (var user in users)
+            {
+
+                ViewData[$"Roles_{user.Id}"] = await _userManager.GetRolesAsync(user);
+            }
+
+            ViewBag.Users = users;
             return View();
         }
+
+
+        [HttpGet]
         public IActionResult Login() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.PhoneNumber, model.Password, false, false);
+
+            if (result.Succeeded) return RedirectToAction("Index", "Home");
+
+            ModelState.AddModelError("", "Неверноый номер телефона или пароль.");
+
+            return View(model);
+        }
+
 
         [HttpGet]
         public IActionResult Register() => View();
@@ -29,8 +54,8 @@ namespace ProgramASP.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var user = new IdentityUser { PhoneNumber = model.PhoneNumber };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            IdentityUser user = new() { UserName = model.PhoneNumber, PhoneNumber = model.PhoneNumber };
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
@@ -39,19 +64,14 @@ namespace ProgramASP.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
 
-                return View(model); // Возвращение на страницу регистрации с сообщениями об ошибках
+                return View(model);
             }
 
-            // Тут менять буду. 
-            if (_userManager.Users.Count() == 1)
-            {
-                await _userManager.AddToRoleAsync(user, "Admin");
-            }
-            else
-            {
-                await _userManager.AddToRoleAsync(user, "User");
-            }
-            return RedirectToAction("Index", "Home"); // Перенаправление на главную страницу после успешной регистрации
+            model.Rights = model.Rights ?? false;
+
+            await _userManager.AddToRoleAsync(user, (bool)model.Rights ? "Admin" : "User");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

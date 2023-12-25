@@ -1,4 +1,20 @@
-﻿@page
-@model ProgramASP.Views.Account.LoginModel
-@{
-}
+﻿<html>
+<head>
+    <title>Вход</title>
+    <link rel="stylesheet" type="text/css" href="/css/Login.css" />
+</head>
+<body>
+    <form method="post">
+        <div>
+            <label for="PhoneNumber">Номер телефона:</label>
+            <input id="PhoneNumber" type="number" name="PhoneNumber" required />
+        </div>
+        <div>
+            <label for="Password">Пароль:</label>
+            <input id="Password" type="password" name="Password" required />
+        </div>
+        <button type="submit">Войти</button>
+    </form>
+    @Html.ValidationSummary(true, "", new { @class = "login-errors" });
+</body>
+</html>

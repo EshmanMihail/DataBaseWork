@@ -19,9 +19,12 @@
             <label for="ConfirmPassword">Подтвердите пароль:</label>
             <input id="ConfirmPassword" type="password" name="ConfirmPassword" required />
         </div>
+        <div>
+            <label for="Rights">Права:</label>
+            <input asp-for="Rights" id="Rights" type="checkbox" name="Rights" value="true" />
+        </div>  
         <button type="submit">Зарегистрироваться</button>
-
-        @Html.ValidationSummary(true, "", new { @class = "registration-errors" })
     </form>
+    @Html.ValidationSummary(true, "", new { @class = "registration-errors" })
 </body>
 </html>

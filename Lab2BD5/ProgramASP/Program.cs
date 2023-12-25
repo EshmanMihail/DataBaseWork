@@ -3,7 +3,7 @@ using InfoStruct.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using ModelsLibrary.Models;
-
+using Microsoft.AspNetCore.Components;
 
 internal class Program
 {
@@ -64,23 +64,23 @@ internal class Program
             pattern: "{controller=SteelPipe}/{action=ShowTable}/{id?}");
 
 
-        //using (var scope = app.Services.CreateScope())
-        //{
-        //    var serviceProvider = scope.ServiceProvider;
-        //    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        using (var scope = app.Services.CreateScope())
+        {
+            var serviceProvider = scope.ServiceProvider;
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        //    EnsureRoleExists("Admin", roleManager).Wait();
-        //    EnsureRoleExists("User", roleManager).Wait();
-        //}
+            EnsureRoleExists("Admin", roleManager).Wait();
+            EnsureRoleExists("User", roleManager).Wait();
+        }
 
         app.Run();
     }
 
-    //public static async Task EnsureRoleExists(string roleName, RoleManager<IdentityRole> roleManager)
-    //{
-    //    if (!await roleManager.RoleExistsAsync(roleName))
-    //    {
-    //        await roleManager.CreateAsync(new IdentityRole(roleName));
-    //    }
-    //}
+    public static async Task EnsureRoleExists(string roleName, RoleManager<IdentityRole> roleManager)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
 }
