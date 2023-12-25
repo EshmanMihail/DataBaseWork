@@ -3,33 +3,39 @@
 <html>
 <head>
     <title> Регистрация </title>
-    <link rel="stylesheet" type="text/css" href="/css/Register.css" />
+    <link rel="stylesheet" type="text/css" href="/css/Login.css" />
+    <style>
+        .centered-div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <a href='@Url.Action("Index", "Home")'>На главную</a>
-        <a href='@Url.Action("Register", "Account")'>Зарегестрироваться</a>
+    <div class ="centered-div">
+        <form method="post" class="container">
+            <div>
+                <label for="PhoneNumber">PhoneNumber:</label>
+                <input id="PhoneNumber" type="number" name="PhoneNumber" required />
+            </div>
+            <div>
+                <label for="Password">Пароль:</label>
+                <input id="Password" type="password" name="Password" required />
+            </div>
+            <div>
+                <label for="ConfirmPassword">Подтвердите пароль:</label>
+                <input id="ConfirmPassword" type="password" name="ConfirmPassword" required />
+            </div>
+            <div>
+                <label for="Rights">Права:</label>
+                <input asp-for="Rights" id="Rights" type="checkbox" name="Rights" value="true" />
+            </div>
+            <button type="submit" class="button">Зарегистрироваться</button>
+        </form>
+        <a href='@Url.Action("Index", "Home")' class="button">На главную</a>
     </div>
-    <br>
-    <form method="post">
-        <div>
-            <label for="PhoneNumber">PhoneNumber:</label>
-            <input id="PhoneNumber" type="number" name="PhoneNumber" required />
-        </div>
-        <div>
-            <label for="Password">Пароль:</label>
-            <input id="Password" type="password" name="Password" required />
-        </div>
-        <div>
-            <label for="ConfirmPassword">Подтвердите пароль:</label>
-            <input id="ConfirmPassword" type="password" name="ConfirmPassword" required />
-        </div>
-        <div>
-            <label for="Rights">Права:</label>
-            <input asp-for="Rights" id="Rights" type="checkbox" name="Rights" value="true" />
-        </div>  
-        <button type="submit">Зарегистрироваться</button>
-    </form>
-    @Html.ValidationSummary(true, "", new { @class = "registration-errors" })
 </body>
 </html>

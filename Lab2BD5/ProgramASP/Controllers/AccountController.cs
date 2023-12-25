@@ -144,7 +144,6 @@ namespace ProgramASP.Controllers
 
             if (user is null)
             {
-
                 ModelState.AddModelError("", "Пользователь не найден.");
                 return View(model);
             }
@@ -155,11 +154,9 @@ namespace ProgramASP.Controllers
 
                 foreach (var error in result.Errors)
                 {
-
                     ModelState.AddModelError("", error.Description);
                 }
             }
-
             return View();
         }
     }

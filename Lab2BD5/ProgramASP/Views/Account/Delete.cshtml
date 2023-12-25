@@ -1,25 +1,23 @@
 ﻿@using ProgramASP.ViewModels.AccountModels
-@model UpdateAccountViewModel
+@model DeleteAccountViewModel
 
 <html>
 <head>
     <title>Удаление</title>
-    <link rel="stylesheet" type="text/css" href="/css/AccountCrud.css" />
+    <link rel="stylesheet" type="text/css" href="/css/DeleteUser.css" />
 </head>
 <body>
-    <div>
-        <a href='@Url.Action("Index", "Home")'>На главную</a>
+    <div class="centered-div">
+        <form method="post" class="container">
+            <div>
+                <label for="PhoneNumber">Телефонный номер пользователя:</label>
+                <input type="number" id="PhoneNumber" name="PhoneNumber" required />
+                @Html.ValidationSummary(true, "", new { @class = "delete-errors" })
+            </div>
+            <button type="submit" class="button">Удалить</button>
+        </form>
+        <a href='@Url.Action("Index", "Home")' class="button">На главную</a>
     </div>
-    <br>
-    <form method="post">
-        <div>
-            <label for="PhoneNumber">Телефонный номер пользователя:</label>
-            <input type="number" id="PhoneNumber" name="PhoneNumber" required />
-        </div>
-
-        <button type="submit">Удалить</button>
-    </form>
-
-    @Html.ValidationSummary(true, "", new { @class = "errors" })
+   
 </body>
 </html>

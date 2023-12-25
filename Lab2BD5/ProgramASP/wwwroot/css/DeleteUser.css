@@ -1,7 +1,4 @@
-﻿﻿.update-errors {
-    color: red;
-}
-a.button {
+﻿a.button {
     position: center;
     width: 100px;
     padding: 10px;
@@ -34,7 +31,7 @@ a.button {
         font-weight: bold;
     }
 
-    .container input[type="number"] {
+    .container input[type="number"]{
         width: 100%;
         padding: 5px;
         border: 1px solid #ccc;

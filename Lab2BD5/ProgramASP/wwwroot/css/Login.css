@@ -1,3 +1,55 @@
-﻿﻿.login-errors {
-    color: red;
+﻿a.button {
+    position: center;
+    width: 100px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
 }
+
+    a.button:hover {
+        background-color: #0062cc;
+    }
+
+.container {
+    width: 300px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+    .container div {
+        margin-bottom: 15px;
+    }
+
+    .container label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .container input[type="number"],
+    .container input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .container button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+        .container button[type="submit"]:hover {
+            background-color: #0062cc;
+        }

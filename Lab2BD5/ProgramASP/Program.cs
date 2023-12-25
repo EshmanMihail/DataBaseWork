@@ -33,6 +33,8 @@ internal class Program
         app.UseHttpsRedirection();
         app.UseSession();
         app.UseResponseCaching();
+        app.UseStaticFiles();
+        app.UseRouting();
 
         app.UseAuthentication();
         app.UseAuthorization();
