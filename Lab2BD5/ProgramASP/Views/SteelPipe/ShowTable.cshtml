@@ -2,6 +2,9 @@
 @using ModelsLibrary.Models;
 @{
     var steelPipes = ViewBag.data as List<SteelPipe>;
+    int pageNumber = ViewBag.pageNumber ?? 1;
+    int totalPages = ViewBag.totalPages ?? 0;
+    ViewBag.PageType = "steelPipe";
 }
 <!DOCTYPE html>
 <html>
@@ -30,7 +33,7 @@
         });
     </script>
     <style>
-        .container {
+        .containerr {
             display: flex;
         }
 
@@ -38,19 +41,19 @@
             margin-right: 20px;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
+    <link rel="stylesheet" type="text/css" href="/css/Index.css" />
 </head>
 <body>
-    <h1>
         <p>
-            <a href='@Url.Action("Create", "SteelPipe")'>Добавить трубу</a>
-            <a href='@Url.Action("Delete", "SteelPipe")'>Удалить трубу</a>
-            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+            <a href='@Url.Action("Create", "SteelPipe")' class="button">Добавить трубу</a>
+            <a href='@Url.Action("Delete", "SteelPipe")' class="button">Удалить трубу</a>
+            <a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
         </p>
-    </h1>
-    <h1>Список труб</h1>
-    <div class="container">
+    <h3>Список труб</h3>
+    <div class="containerr">
         <div class="table-container">
-            <table border="1">
+            <table>
                 <tr>
                     <th>Код</th>
                     <th>Внешний диаметр</th>
@@ -75,7 +78,7 @@
         </div>
         <div id="selected-data">
             <h2>Выбранные данные</h2>
-            <form action="/SteelPipe/Update" method="post">
+            <form action="/SteelPipe/Update" method="post" class="container">
                 <label for="pipeId">Код:</label>
                 <input type="text" name="pipeId" readonly>
                 <br>
@@ -91,9 +94,11 @@
                 <label for="linearWeight">Линейная масса:</label>
                 <input type="number" name="linearWeight" required>
                 <br>
-                <button type="submit">Сохранить</button>
+                <input type="hidden" value="@pageNumber" name="PageNumber" />
+                <button type="submit" class="button">Сохранить</button>
             </form>
         </div>
     </div>
+    @Html.Partial("_pagingPartial")
 </body>
 </html>

@@ -3,20 +3,24 @@
 <head>
     <title>Добавление новой записи</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <h1>Добавление новой записи</h1>
-    <form action="/HeatWell/Create" method="post">
-        <label for="wellName">Название:</label>
-        <input type="text" name="wellName" required>
-        <br>
-        <label for="networkId">Код сети:</label>
-        <input type="number" name="networkId" required>
-        <br>
-        <label for="nodeNumber">Номер узла:</label>
-        <input type="number" name="nodeNumber" required>
-        <br>
-        <button type="submit">Добавить</button>
-    </form>
+    <div class="centered-div">
+        <h1>Добавление новой записи</h1>
+        <form action="/HeatWell/Create" method="post" class="container">
+            <label for="wellName">Название:</label>
+            <input type="text" name="wellName" required>
+            <br>
+            <label for="networkId">Код сети:</label>
+            <input type="number" name="networkId" required>
+            <br>
+            <label for="nodeNumber">Номер узла:</label>
+            <input type="number" name="nodeNumber" required>
+            <br>
+            <button type="submit" class="button">Добавить</button>
+        </form>
+        <a href='@Url.Action("ShowTable", "HeatWell")' class="button">Назад</a>
+    </div>
 </body>
 </html>

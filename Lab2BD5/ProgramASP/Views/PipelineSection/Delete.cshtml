@@ -1,16 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Добавление новой записи</title>
+    <title>Удаление записи</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <h2>Удаление трубопровода</h2>
-    <form method="post" action="/PipelineSection/Delete">
-        <label>ID записи:</label>
-        <input type="text" name="pipelineId" /><br>
+    <div class="centered-div">
+        <h1>Удаление трубопровода</h1>
+        <form method="post" action="/PipelineSection/Delete" class="container">
+            <label>ID записи:</label>
+            <input type="text" name="pipelineId" /><br>
 
-        <input type="submit" value="Удалить" />
-    </form>
+            <button type="submit" class="button">Удалить</button>
+        </form>
+        <a href='@Url.Action("ShowTable", "PipelineSection")' class="button">Назад</a>
+    </div>
 </body>
 </html>

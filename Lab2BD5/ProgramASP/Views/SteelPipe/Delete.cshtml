@@ -1,16 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Добавление новой записи</title>
+    <title>Удаление записи</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <h1>Удалить трубу</h1>
-    <form action="/SteelPipe/Delete" method="post">
-        <label for="pipeId">Идентификатор трубы:</label>
-        <input type="text" name="pipeId" required>
-        <br>
-        <button type="submit">Удалить</button>
-    </form>
+    <div class="centered-div">
+        <h1>Удалить трубу</h1>
+        <form action="/SteelPipe/Delete" method="post" class="container">
+            <label for="pipeId">Идентификатор трубы:</label>
+            <input type="text" name="pipeId" required>
+            <br>
+            <button type="submit" class="button">Удалить</button>
+        </form>
+        <a href='@Url.Action("ShowTable", "SteelPipe")' class="button">Назад</a>
+    </div>
 </body>
 </html>

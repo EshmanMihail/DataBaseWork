@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ModelsLibrary.Models;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProgramASP.Controllers
 {
@@ -19,17 +20,38 @@ namespace ProgramASP.Controllers
             _enterprises = db.Enterprises.ToList();
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        //[ResponseCache(Duration = CacheDuration)]
+        //public IActionResult ShowTable()
+        //{
+        //    ViewBag.data = _enterprises;
+        //    return View();
+        //}
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _enterprises;
+            var query = db.Enterprises.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
-        [HttpPost]
+    [HttpPost]
         [Authorize]
         public IActionResult Update(int enterpriceId, string name, string organization)
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
             if (enterpriceId != 0 && name != null && organization != null)
             {
                 var enterpriseToUpdate = _enterprises.Find(x => x.ID == enterpriceId);
@@ -43,7 +65,7 @@ namespace ProgramASP.Controllers
             }
 
             ViewBag.data = _enterprises;
-            return View("ShowTable");
+            return RedirectToAction("ShowTable", "Enterprise", new { pageNumber = PageNumber });
         }
 
 

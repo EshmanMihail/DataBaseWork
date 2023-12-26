@@ -17,13 +17,33 @@ namespace ProgramASP.Controllers
         public HeatNetworkController([FromServices] HeatSchemeStorageContext context)
         {
             db = context;
-            _networks = db.HeatNetworks.Include(x => x.Enterprise).OrderByDescending(x => x.NetworkId).Take(30).ToList();
+            _networks = db.HeatNetworks.Include(x => x.Enterprise).ToList();
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        //[ResponseCache(Duration = CacheDuration)]
+        //public IActionResult ShowTable()
+        //{
+        //    ViewBag.data = _networks;
+        //    return View();
+        //}
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _networks;
+            var query = db.HeatNetworks.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
@@ -31,6 +51,7 @@ namespace ProgramASP.Controllers
         [Authorize]
         public IActionResult Update(int networkId, string networkName, int networkNumber, int enterpriseId, string networkType) 
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
             var enterprise = db.Enterprises.Find(enterpriseId);
             if (networkId != 0 && networkName != null && networkNumber > 0 && enterprise != null && networkType != null)
             {
@@ -45,8 +66,8 @@ namespace ProgramASP.Controllers
 
                 db.SaveChanges();
             }
-            ViewBag.data = _networks; 
-            return View("ShowTable");
+            ViewBag.data = _networks;
+            return RedirectToAction("ShowTable", "HeatNetwork", new { pageNumber = PageNumber });
         }
 
 

@@ -3,20 +3,24 @@
 <head>
     <title>Добавление новой записи</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <h1>Добавить точку</h1>
-    <form action="/HeatPoint/Create" method="post">
-        <label for="pointName">Название:</label>
-        <input type="text" name="pointName" required>
-        <br>
-        <label for="networkId">Код сети:</label>
-        <input type="number" name="networkId" required>
-        <br>
-        <label for="nodeNumber">Номер узла:</label>
-        <input type="number" name="nodeNumber" required>
-        <br>
-        <button type="submit">Добавить</button>
-    </form>
+    <div class="centered-div">
+        <h1>Добавить точку</h1>
+        <form action="/HeatPoint/Create" method="post" class="container">
+            <label for="pointName">Название:</label>
+            <input type="text" name="pointName" required>
+            <br>
+            <label for="networkId">Код сети:</label>
+            <input type="number" name="networkId" required>
+            <br>
+            <label for="nodeNumber">Номер узла:</label>
+            <input type="number" name="nodeNumber" required>
+            <br>
+            <button type="submit" class="button">Добавить</button>
+        </form>
+        <a href='@Url.Action("ShowTable", "HeatPoint")' class="button">Назад</a>
+    </div>
 </body>
 </html>

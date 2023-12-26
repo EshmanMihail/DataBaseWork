@@ -18,13 +18,27 @@ namespace ProgramASP.Controllers
             db = context;
             _pipelines = db.PipelineSections.Include(ps => ps.StartNodeNumberNavigation)
                                             .Include(ps => ps.EndNodeNumberNavigation)
-                                            .OrderByDescending(x => x.SectionId).Take(30).ToList();
+                                            .ToList();
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _pipelines;
+            var query = db.PipelineSections.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
@@ -34,6 +48,7 @@ namespace ProgramASP.Controllers
         public IActionResult Update(int sectionId, int sectionNumber, int startNodeNumber, int endNodeNumber,
             decimal pipelineLength, decimal diameter, decimal thickness, DateOnly lastRepairDate)
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
             var heatPointFirst = db.HeatPoints.Find(startNodeNumber);
             var heatPointSecond = db.HeatPoints.Find(endNodeNumber);
             if (sectionId > 0 && sectionNumber > 0 && heatPointFirst != null && heatPointSecond != null
@@ -55,7 +70,7 @@ namespace ProgramASP.Controllers
             }
 
             ViewBag.data = _pipelines;
-            return View("ShowTable");
+            return RedirectToAction("ShowTable", "PipelineSection", new { pageNumber = PageNumber });
         }
 
 

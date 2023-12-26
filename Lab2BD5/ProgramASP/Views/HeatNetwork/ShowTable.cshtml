@@ -1,6 +1,9 @@
 ﻿@using ModelsLibrary.Models;
 @{
     var heatNetworks = ViewBag.data as List<HeatNetwork>;
+    int pageNumber = ViewBag.pageNumber ?? 1;
+    int totalPages = ViewBag.totalPages ?? 0;
+    ViewBag.PageType = "heatNetwork";
 }
 <!DOCTYPE html>
 <html>
@@ -29,7 +32,7 @@
         });
     </script>
     <style>
-        .container {
+        .containerr {
             display: flex;
         }
 
@@ -37,19 +40,19 @@
             margin-right: 20px;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
+    <link rel="stylesheet" type="text/css" href="/css/Index.css" />
 </head>
 <body>
-    <h1>
         <p>
-            <a href='@Url.Action("Create", "HeatNetwork")'>Добавить сеть</a>
-            <a href='@Url.Action("Delete", "HeatNetwork")'>Удалить сеть</a>
-            <a href='@Url.Action("Index", "Home")'>Вернуться на главную</a>
+            <a href='@Url.Action("Create", "HeatNetwork")' class="button">Добавить сеть</a>
+            <a href='@Url.Action("Delete", "HeatNetwork")' class="button">Удалить сеть</a>
+            <a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
         </p>
-    </h1>
-    <h1>Список тепловых сетей</h1>
-    <div class="container">
+    <h3>Список тепловых сетей</h3>
+    <div class="containerr">
         <div class="table-container">
-            <table border="1">
+            <table>
                 <tr>
                     <th>Код</th>
                     <th>Название</th>
@@ -75,7 +78,7 @@
         </div>
         <div id="selected-data">
             <h2>Выбранные данные</h2>
-            <form action="/HeatNetwork/Update" method="post">
+            <form action="/HeatNetwork/Update" method="post" class="container">
                 <label for="networkId">Код:</label>
                 <input type="text" name="networkId" readonly>
                 <br>
@@ -91,9 +94,11 @@
                 <label for="networkType">Тип:</label>
                 <input type="text" name="networkType" required>
                 <br>
-                <button type="submit">Сохранить</button>
+                <input type="hidden" value="@pageNumber" name="PageNumber" />
+                <button type="submit" class="button">Сохранить</button>
             </form>
         </div>
     </div>
+    @Html.Partial("_pagingPartial")
 </body>
 </html>

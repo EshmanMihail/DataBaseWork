@@ -16,14 +16,28 @@ namespace ProgramASP.Controllers
         public HeatPointController([FromServices] HeatSchemeStorageContext context)
         {
             db = context;
-            _heatpoints = db.HeatPoints.Include(x => x.Network).OrderByDescending(x => x.PointId).Take(30).ToList();
+            _heatpoints = db.HeatPoints.Include(x => x.Network).ToList();
 
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _heatpoints;
+            var query = db.HeatPoints.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
@@ -31,6 +45,7 @@ namespace ProgramASP.Controllers
         [Authorize]
         public IActionResult Update(int pointId, string pointName, int networkId, int nodeNumber)
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
             var network = db.HeatNetworks.Find(networkId);
             if (network != null && pointId > 0 && pointName != null && nodeNumber > 0)
             {
@@ -46,7 +61,7 @@ namespace ProgramASP.Controllers
             }
 
             ViewBag.data = _heatpoints;
-            return View("ShowTable");
+            return RedirectToAction("ShowTable", "HeatPoint", new { pageNumber = PageNumber });
         }
 
 

@@ -3,25 +3,27 @@
 <head>
     <title>Добавление новой записи</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <h1>Добавление новой записи</h1>
-    <h1>Добавить HeatConsumer</h1>
-
-    <form action="/HeatConsumer/Create" method="post">
-        <label for="consumerName">Название:</label>
-        <input type="text" name="consumerName" required>
-        <br>
-        <label for="networkId">Код сети:</label>
-        <input type="number" name="networkId" required>
-        <br>
-        <label for="nodeNumber">Номер узла:</label>
-        <input type="number" name="nodeNumber" required>
-        <br>
-        <label for="calculatedPower">Расчетная мощность:</label>
-        <input type="number" name="calculatedPower" step="0.01" required>
-        <br>
-        <button type="submit">Добавить</button>
-    </form>
+    <div class="centered-div">
+        <h1>Добавление новой записи</h1>
+        <form action="/HeatConsumer/Create" method="post" class="container">
+            <label for="consumerName">Название:</label>
+            <input type="text" name="consumerName" required>
+            <br>
+            <label for="networkId">Код сети:</label>
+            <input type="number" name="networkId" required>
+            <br>
+            <label for="nodeNumber">Номер узла:</label>
+            <input type="number" name="nodeNumber" required>
+            <br>
+            <label for="calculatedPower">Расчетная мощность:</label>
+            <input type="number" name="calculatedPower" step="0.01" required>
+            <br>
+            <button type="submit" class="button">Добавить</button>
+        </form>
+        <a href='@Url.Action("ShowTable", "HeatConsumer")' class="button">Назад</a>
+    </div>
 </body>
 </html>

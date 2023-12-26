@@ -16,13 +16,33 @@ namespace ProgramASP.Controllers
         public HeatConsumerController([FromServices] HeatSchemeStorageContext context)
         {
             db = context;
-            _consumers = db.HeatConsumers.Include(x => x.Network).OrderByDescending(x => x.ConsumerId).Take(30).ToList();
+            _consumers = db.HeatConsumers.Include(x => x.Network).ToList();
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        //[ResponseCache(Duration = CacheDuration)]
+        //public IActionResult ShowTable()
+        //{
+        //    ViewBag.data = _consumers;
+        //    return View();
+        //}
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _consumers;
+            var query = db.HeatConsumers.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
@@ -30,6 +50,8 @@ namespace ProgramASP.Controllers
         [Authorize]
         public IActionResult Update(int consumerId, string consumerName, int networkId, int nodeNumber, decimal calculatedPower)
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
+
             var network = db.HeatNetworks.Find(networkId);
             if (consumerId != 0 && consumerName != null && network != null && nodeNumber > 0 && calculatedPower >= 0)
             {
@@ -46,7 +68,7 @@ namespace ProgramASP.Controllers
             }
 
             ViewBag.data = _consumers;
-            return View("ShowTable");
+            return RedirectToAction("ShowTable", "HeatConsumer", new { pageNumber = PageNumber });
         }
 
 

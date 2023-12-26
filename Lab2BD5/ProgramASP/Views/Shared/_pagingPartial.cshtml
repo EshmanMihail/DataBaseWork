@@ -1,0 +1,25 @@
+﻿<div class="pagination">
+    <a href="/@ViewBag.PageType/showTable?pageNumber=1" class="@(1 == ViewBag.PageNumber ? "active" : "")">1</a>
+    @if (ViewBag.PageNumber > 21) {
+        <a href="/@ViewBag.PageType/showTable?pageNumber=@(ViewBag.PageNumber-20)">...</a>
+    }
+    @for (int i = Math.Max(2, ViewBag.PageNumber - 10); i <= Math.Min(ViewBag.TotalPages - 1, ViewBag.PageNumber + 10); i++) {
+        <a href="/@ViewBag.PageType/showTable?pageNumber=@i" class="@(i == ViewBag.PageNumber ? "active" : "")">@i</a>
+    }
+    @if (ViewBag.PageNumber < ViewBag.TotalPages - 20) {
+        <a href="/@ViewBag.PageType/showTable?pageNumber=@(ViewBag.PageNumber+20)">...</a>
+    }
+    <a href="/@ViewBag.PageType/showTable?pageNumber=@ViewBag.TotalPages" class="@(ViewBag.TotalPages == ViewBag.PageNumber ? "active" : "")">@ViewBag.TotalPages</a>
+    <input type="number" id="pageNumberInput" min="1" max="@ViewBag.TotalPages" value="@ViewBag.PageNumber" />
+    <button onclick="goToPage()">Перейти</button>
+</div>
+
+<script>
+    function goToPage() {
+        var pageNumber = document.getElementById('pageNumberInput').value;
+        if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= @ViewBag.TotalPages) {
+            location.href = "/@ViewBag.PageType/ShowTable?pageNumber=" + pageNumber;
+        }
+    }
+</script>
+

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ModelsLibrary;
 using ModelsLibrary.Models;
 using System.IO.Pipelines;
@@ -20,10 +21,24 @@ namespace ProgramASP.Controllers
             _steelpipe = db.SteelPipes.ToList();
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _steelpipe;
+            var query = db.SteelPipes.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
@@ -31,6 +46,7 @@ namespace ProgramASP.Controllers
         [Authorize]
         public IActionResult Update(int pipeId, decimal outerDiameter, decimal thickness, decimal linearInternalVolume, decimal linearWeight)
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
             if (pipeId != 0 && outerDiameter > 0 && thickness > 0 && linearInternalVolume > 0 && linearWeight > 0)
             {
                 var steelpipeToUpdate = _steelpipe.Find(x => x.ID == pipeId);
@@ -46,7 +62,7 @@ namespace ProgramASP.Controllers
             }
 
             ViewBag.data = _steelpipe;
-            return View("ShowTable");
+            return RedirectToAction("ShowTable", "SteelPipe", new { pageNumber = PageNumber });
         }
 
 

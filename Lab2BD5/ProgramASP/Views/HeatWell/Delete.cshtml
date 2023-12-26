@@ -3,15 +3,18 @@
 <head>
     <title>Удаление записи</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <h1>Удалить запись</h1>
-    <form action="/HeatWell/Delete" method="post">
-        <label for="wellId">Идентификатор скважины:</label>
-        <input type="number" name="wellId" required>
-        <br>
-        <button type="submit">Удалить</button>
-    </form>
-
+    <div class="centered-div">
+        <h1>Удалить запись</h1>
+        <form action="/HeatWell/Delete" method="post" class="container">
+            <label for="wellId">Идентификатор скважины:</label>
+            <input type="number" name="wellId" required>
+            <br>
+            <button type="submit" class="button">Удалить</button>
+        </form>
+        <a href='@Url.Action("ShowTable", "HeatWell")' class="button">Назад</a>
+    </div>
 </body>
 </html>

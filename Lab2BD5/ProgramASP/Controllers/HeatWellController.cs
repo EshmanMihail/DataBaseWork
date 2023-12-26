@@ -16,13 +16,27 @@ namespace ProgramASP.Controllers
         public HeatWellController([FromServices] HeatSchemeStorageContext context)
         {
             db = context;
-            _heatwells = db.HeatWells.Include(x => x.Network).OrderByDescending(x => x.WellId).Take(30).ToList();
+            _heatwells = db.HeatWells.Include(x => x.Network).ToList();
         }
 
-        [ResponseCache(Duration = CacheDuration)]
-        public IActionResult ShowTable()
+        [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
+        public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
-            ViewBag.data = _heatwells;
+            var query = db.HeatWells.AsQueryable();
+
+            int total = await query.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)total / 20);
+
+            var data = await query
+                .Skip((pageNumber - 1) * 20)
+                .Take(20)
+                .ToListAsync();
+
+            ViewBag.data = data;
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.totalPages = totalPages;
+            ViewBag.DbContext = db;
+
             return View();
         }
 
@@ -30,6 +44,7 @@ namespace ProgramASP.Controllers
         [Authorize]
         public IActionResult Update(int wellId, string wellName, int networkId, int nodeNumber)
         {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
             var network = db.HeatNetworks.Find(networkId);
             if (wellId != 0 && wellName != null && network != null && nodeNumber > 0)
             {
@@ -44,7 +59,7 @@ namespace ProgramASP.Controllers
                 db.SaveChanges();
             }
             ViewBag.data = _heatwells;
-            return View("ShowTable");
+            return RedirectToAction("ShowTable", "HeatWell", new { pageNumber = PageNumber });
         }
 
 
