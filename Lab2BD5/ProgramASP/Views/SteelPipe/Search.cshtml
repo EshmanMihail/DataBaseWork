@@ -1,9 +1,13 @@
-﻿@{
-	var result = ViewBag.data as List<string> ?? new();
+﻿@using ModelsLibrary
+@{
+	var result = ViewBag.data as List<SteelPipe> ?? new();
 	var text = ViewBag.text ?? "";
 	var column = ViewBag.column ?? "";
 }
-
+<link rel="stylesheet" type="text/css" href="/css/ForSearch.css" />
+<a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
+<br>
+<br>
 <form>
 	<label for="searchColumn">Выберите столбец для поиска:</label><br />
 	<select name="searchColumn">
@@ -20,8 +24,24 @@
 </form>
 
 <div>
-	@foreach (var item in result)
-	{
-		<p>@item</p>
-	}
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Диаметр</th>
+            <th>Толщина</th>
+            <th>Внутренний объем</th>
+            <th>Погонный вес</th>
+        </tr>
+
+        @foreach (SteelPipe pipeline in result)
+        {
+            <tr>
+                <td>@pipeline.PipeId</td>
+                <td>@pipeline.OuterDiameter</td>
+                <td>@pipeline.Thickness</td>
+                <td>@pipeline.LinearInternalVolume</td>
+                <td>@pipeline.LinearWeight</td>
+            </tr>
+        }
+    </table>
 </div>

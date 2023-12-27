@@ -1,9 +1,13 @@
-﻿@{
-	var result = ViewBag.data as List<string> ?? new();
+﻿@using ModelsLibrary.Models
+@{
+    var result = ViewBag.data as List<PipelineSection> ?? new();
 	var text = ViewBag.text ?? "";
 	var column = ViewBag.column ?? "";
 }
-
+<link rel="stylesheet" type="text/css" href="/css/ForSearch.css" />
+<a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
+<br>
+<br>
 <form>
 	<label for="searchColumn">Выберите столбец для поиска:</label><br />
 	<select name="searchColumn">
@@ -20,9 +24,31 @@
 </form>
 
 <div>
-	@foreach (var item in result)
-	{
-		<p>@item</p>
-	}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Номер секции</th>
+            <th>Номер начального узла</th>
+            <th>Номер конечного узла</th>
+            <th>Длина трубопровода</th>
+            <th>Диаметр</th>
+            <th>Толщина</th>
+            <th>Дата последнего ремонта</th>
+        </tr>
+
+        @foreach (PipelineSection pipeline in result)
+        {
+            <tr>
+                <td>@pipeline.SectionId</td>
+                <td>@pipeline.SectionNumber</td>
+                <td>@pipeline.StartNodeNumber</td>
+                <td>@pipeline.EndNodeNumber</td>
+                <td>@pipeline.PipelineLength</td>
+                <td>@pipeline.Diameter</td>
+                <td>@pipeline.Thickness</td>
+                <td>@pipeline.LastRepairDate</td>
+            </tr>
+        }
+    </table>
 </div>
 

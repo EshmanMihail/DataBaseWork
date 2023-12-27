@@ -125,7 +125,7 @@ namespace ProgramASP.Controllers
 
 		public IActionResult Search(string searchColumn, string searchText)
 		{
-			List<string> result = new();
+			List<HeatPoint> result = new();
 			if (searchColumn is null || searchText is null)
 			{
 				if (TryGetCookie("columnPoint", ref searchColumn))
@@ -153,15 +153,13 @@ namespace ProgramASP.Controllers
 			switch (searchColumn)
 			{
 				case "PointName":
-					result = _heatpoints.Where(e => e.PointName != null && e.PointName.Contains(searchText))
-						.Select(e => e.PointName).ToList();
+					result = _heatpoints.Where(e => e.PointName != null && e.PointName.Contains(searchText)).ToList();
 					break;
 				case "NodeNumber":
-					result = _heatpoints
-						.Where(e => e.NodeNumber.HasValue && e.NodeNumber.Value.ToString().Contains(searchText))
-						.Select(e => e.NodeNumber.Value.ToString())
-						.ToList();
-					break;
+                    result = _heatpoints
+                            .Where(e => e.NodeNumber.ToString() == searchText)
+                            .ToList();
+                    break;
 			}
 
 			ViewBag.data = result;
@@ -196,20 +194,18 @@ namespace ProgramASP.Controllers
 				searchSession = HttpContext.Session.Get<SessionSearchStuff>("searchSessionPoint") ?? new SessionSearchStuff();
 			}
 
-			List<string> result = new();
+			List<HeatPoint> result = new();
 
 			if (searchSession.isSaved || TryGetFromServer(searchSession, searchColumn, searchText))
 			{
 				switch (searchSession.columnName)
 				{
 					case "PointName":
-						result = _heatpoints.Where(e => e.PointName != null && e.PointName.Contains(searchSession.textForSearch))
-							.Select(e => e.PointName).ToList();
+						result = _heatpoints.Where(e => e.PointName != null && e.PointName.Contains(searchSession.textForSearch)).ToList();
 						break;
 					case "NodeNumber":
 						result = _heatpoints
-							.Where(e => e.NodeNumber.HasValue && e.NodeNumber.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.NodeNumber.Value.ToString())
+							.Where(e => e.NodeNumber.ToString() == searchSession.textForSearch )
 							.ToList();
 						break;
 				}

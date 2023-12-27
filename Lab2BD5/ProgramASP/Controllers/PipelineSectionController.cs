@@ -138,7 +138,7 @@ namespace ProgramASP.Controllers
 
 		public IActionResult Search(string searchColumn, string searchText)
 		{
-			List<string> result = new();
+			List<PipelineSection> result = new();
 			if (searchColumn is null || searchText is null)
 			{
 				if (TryGetCookie("columnPipe", ref searchColumn))
@@ -166,27 +166,22 @@ namespace ProgramASP.Controllers
 			switch (searchColumn)
 			{
 				case "PipelineLength":
-					result = _pipelines
-						.Where(e => e.PipelineLength.HasValue && e.PipelineLength.Value.ToString().Contains(searchText))
-						.Select(e => e.PipelineLength.Value.ToString())
-						.ToList();
-					break;
+                    result = _pipelines.Where(x => x.PipelineLength.ToString() == searchText)
+                         .ToList();
+                    break;
 				case "Diameter":
 					result = _pipelines
-						.Where(e => e.Diameter.HasValue && e.Diameter.Value.ToString().Contains(searchText))
-						.Select(e => e.Diameter.Value.ToString())
+						.Where(e => e.Diameter.ToString() == searchText)
 						.ToList();
 					break;
-				case "Thickness":
+				case "Thickness": 
 					result = _pipelines
-						.Where(e => e.Thickness.HasValue && e.Thickness.Value.ToString().Contains(searchText))
-						.Select(e => e.Thickness.Value.ToString())
+						.Where(e => e.Thickness.ToString() == searchText)
 						.ToList();
 					break;
 				case "LastRepairDate":
 					result = _pipelines
 						.Where(e => e.LastRepairDate.HasValue && e.LastRepairDate.Value.ToString().Contains(searchText))
-						.Select(e => e.LastRepairDate.Value.ToString())
 						.ToList();
 					break;
 			}
@@ -223,34 +218,29 @@ namespace ProgramASP.Controllers
 				searchSession = HttpContext.Session.Get<SessionSearchStuff>("searchSessionPipe") ?? new SessionSearchStuff();
 			}
 
-			List<string> result = new();
+			List<PipelineSection> result = new();
 
 			if (searchSession.isSaved || TryGetFromServer(searchSession, searchColumn, searchText))
 			{
 				switch (searchSession.columnName)
 				{
-					case "PipelineLength":
-						result = _pipelines
-							.Where(e => e.PipelineLength.HasValue && e.PipelineLength.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.PipelineLength.Value.ToString())
-							.ToList();
-						break;
-					case "Diameter":
-						result = _pipelines
-							.Where(e => e.Diameter.HasValue && e.Diameter.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.Diameter.Value.ToString())
-							.ToList();
-						break;
-					case "Thickness":
-						result = _pipelines
-							.Where(e => e.Thickness.HasValue && e.Thickness.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.Thickness.Value.ToString())
-							.ToList();
-						break;
-					case "LastRepairDate":
+                    case "PipelineLength":
+                        result = _pipelines.Where(x => x.PipelineLength.ToString() == searchSession.textForSearch)
+                             .ToList();
+                        break;
+                    case "Diameter":
+                        result = _pipelines
+                            .Where(e => e.Diameter.ToString() == searchSession.textForSearch)
+                            .ToList();
+                        break;
+                    case "Thickness":
+                        result = _pipelines
+                            .Where(e => e.Thickness.ToString() == searchSession.textForSearch)
+                            .ToList();
+                        break;
+                    case "LastRepairDate":
 						result = _pipelines
 							.Where(e => e.LastRepairDate.HasValue && e.LastRepairDate.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.LastRepairDate.Value.ToString())
 							.ToList();
 						break;
 				}

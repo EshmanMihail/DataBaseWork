@@ -141,7 +141,7 @@ namespace ProgramASP.Controllers
 
 		public IActionResult Search(string searchColumn, string searchText)
 		{
-			List<string> result = new();
+			List<Enterprise> result = new();
 
 			if (searchColumn is null || searchText is null)
 			{
@@ -170,10 +170,10 @@ namespace ProgramASP.Controllers
 			switch (searchColumn)
 			{
 				case "EnterpriseName":
-					result = _enterprises.Select(e => e.EnterpriseName).Where(x => x.Contains(searchText)).ToList();
+					result = _enterprises.Where(x => x.EnterpriseName.Contains(searchText)).ToList();
 					break;
 				case "ManagementOrganization":
-					result = _enterprises.Select(e => e.ManagementOrganization).Where(x => x.Contains(searchText)).ToList();
+					result = _enterprises.Where(e => e.ManagementOrganization.Contains(searchText)).ToList();
 					break;
 			}
 
@@ -208,18 +208,18 @@ namespace ProgramASP.Controllers
                 searchSession = HttpContext.Session.Get<SessionSearchStuff>("searchSessionEnterprise") ?? new SessionSearchStuff();
 			}
 			 
-			List<string> result = new();
+			List<Enterprise> result = new();
 
 			if (searchSession.isSaved || TryGetFromServer(searchSession, searchColumn, searchText))
 			{
 				switch (searchSession.columnName)
 				{
 					case "EnterpriseName":
-						result = _enterprises.Select(e => e.EnterpriseName).Where(x => x.Contains(searchSession.textForSearch)).ToList();
-						break;
+                        result = _enterprises.Where(x => x.EnterpriseName.Contains(searchSession.textForSearch)).ToList();
+                        break;
 					case "ManagementOrganization":
-						result = _enterprises.Select(e => e.ManagementOrganization).Where(x => x.Contains(searchSession.textForSearch)).ToList();
-						break;
+                        result = _enterprises.Where(e => e.ManagementOrganization.Contains(searchSession.textForSearch)).ToList();
+                        break;
 				}
 			}
 

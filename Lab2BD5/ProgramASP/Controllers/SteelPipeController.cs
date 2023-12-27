@@ -123,7 +123,7 @@ namespace ProgramASP.Controllers
 
 		public IActionResult Search(string searchColumn, string searchText)
 		{
-			List<string> result = new();
+			List<SteelPipe> result = new();
 			if (searchColumn is null || searchText is null)
 			{
 				if (TryGetCookie("columnSteelPipe", ref searchColumn))
@@ -152,26 +152,22 @@ namespace ProgramASP.Controllers
 			{
 				case "OuterDiameter":
 					result = _steelpipe
-						.Where(e => e.OuterDiameter.HasValue && e.OuterDiameter.Value.ToString().Contains(searchText))
-						.Select(e => e.OuterDiameter.Value.ToString())
+						.Where(e => e.OuterDiameter.ToString() == searchText)
 						.ToList();
 					break;
 				case "Thickness":
 					result = _steelpipe
-						.Where(e => e.Thickness.HasValue && e.Thickness.Value.ToString().Contains(searchText))
-						.Select(e => e.Thickness.Value.ToString())
+						.Where(e => e.Thickness.ToString() == searchText)
 						.ToList();
 					break;
 				case "LinearInternalVolume":
 					result = _steelpipe
-						.Where(e => e.LinearInternalVolume.HasValue && e.LinearInternalVolume.Value.ToString().Contains(searchText))
-						.Select(e => e.LinearInternalVolume.Value.ToString())
+						.Where(e => e.LinearInternalVolume.ToString() == searchText)
 						.ToList();
 					break;
 				case "LinearWeight":
 					result = _steelpipe
-						.Where(e => e.LinearWeight.HasValue && e.LinearWeight.Value.ToString().Contains(searchText))
-						.Select(e => e.LinearWeight.Value.ToString())
+						.Where(e => e.LinearWeight.Value.ToString() == searchText)
 						.ToList();
 					break;
 			}
@@ -208,37 +204,33 @@ namespace ProgramASP.Controllers
 				searchSession = HttpContext.Session.Get<SessionSearchStuff>("searchSessionSteelPipe") ?? new SessionSearchStuff();
 			}
 
-			List<string> result = new();
+			List<SteelPipe> result = new();
 
 			if (searchSession.isSaved || TryGetFromServer(searchSession, searchColumn, searchText))
 			{
 				switch (searchSession.columnName)
 				{
-					case "OuterDiameter":
-						result = _steelpipe
-							.Where(e => e.OuterDiameter.HasValue && e.OuterDiameter.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.OuterDiameter.Value.ToString())
-							.ToList();
-						break;
-					case "Thickness":
-						result = _steelpipe
-							.Where(e => e.Thickness.HasValue && e.Thickness.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.Thickness.Value.ToString())
-							.ToList();
-						break;
-					case "LinearInternalVolume":
-						result = _steelpipe
-							.Where(e => e.LinearInternalVolume.HasValue && e.LinearInternalVolume.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.LinearInternalVolume.Value.ToString())
-							.ToList();
-						break;
-					case "LinearWeight":
-						result = _steelpipe
-							.Where(e => e.LinearWeight.HasValue && e.LinearWeight.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.LinearWeight.Value.ToString())
-							.ToList();
-						break;
-				}
+                    case "OuterDiameter":
+                        result = _steelpipe
+                            .Where(e => e.OuterDiameter.ToString() == searchSession.textForSearch)
+                            .ToList();
+                        break;
+                    case "Thickness":
+                        result = _steelpipe
+                            .Where(e => e.Thickness.ToString() == searchSession.textForSearch)
+                            .ToList();
+                        break;
+                    case "LinearInternalVolume":
+                        result = _steelpipe
+                            .Where(e => e.LinearInternalVolume.ToString() == searchSession.textForSearch)
+                            .ToList();
+                        break;
+                    case "LinearWeight":
+                        result = _steelpipe
+                            .Where(e => e.LinearWeight.ToString() == searchSession.textForSearch)
+                            .ToList();
+                        break;
+                }
 			}
 
 			ViewBag.data = result;

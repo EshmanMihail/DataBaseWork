@@ -1,9 +1,13 @@
-﻿@{
-	var result = ViewBag.data as List<string> ?? new();
+﻿@using ModelsLibrary.Models
+@{
+	var result = ViewBag.data as List<HeatPoint> ?? new();
 	var text = ViewBag.text ?? "";
 	var column = ViewBag.column ?? "";
 }
-
+<link rel="stylesheet" type="text/css" href="/css/ForSearch.css" />
+<a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
+<br>
+<br>
 <form>
 	<label for="searchColumn">Выберите столбец для поиска:</label><br />
 	<select name="searchColumn">
@@ -18,8 +22,20 @@
 </form>
 
 <div>
-	@foreach (var item in result)
-	{
-		<p>@item</p>
-	}
+    <table border="1">
+        <tr>
+            <th>Код</th>
+            <th>Название</th>
+            <th>Номер</th>
+        </tr>
+
+        @foreach (HeatPoint point in result)
+        {
+            <tr>
+                <td>@point.ID</td>
+                <td>@point.PointName</td>
+                <td>@point.NodeNumber</td>
+            </tr>
+        }
+    </table>
 </div>

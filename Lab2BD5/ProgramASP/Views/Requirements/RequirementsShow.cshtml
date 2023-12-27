@@ -1,85 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Запросы";
-}
-
-<h1>Запросы</h1>
-
-<button onclick="executeFirstTask()">Запрос 1</button>
-<button onclick="executeSecondTask()">Запрос 2</button>
-<button onclick="executeThirdTask()">Запрос 3</button>
-<button onclick="executeFourthTask()">Запрос 4</button>
-
-<div id="resultContainer"></div>
-
-@section Scripts {
-    <script>
-        function executeFirstTask() {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("FirstTask", "Requirements")",
-                success: function (data) {
-                    displayResult(data);
-                },
-                error: function () {
-                    alert("Ошибка выполнения запроса.");
-                }
-            });
-        }
-
-        function executeSecondTask() {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("SecondTask", "Requirements")",
-                success: function (data) {
-                    displayResult(data);
-                },
-                error: function () {
-                    alert("Ошибка выполнения запроса.");
-                }
-            });
-        }
-
-        function executeThirdTask() {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("ThirdTask", "Requirements")",
-                success: function (data) {
-                    displayResult(data);
-                },
-                error: function () {
-                    alert("Ошибка выполнения запроса.");
-                }
-            });
-        }
-
-        function executeFourthTask() {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("FourthTask", "Requirements")",
-                success: function (data) {
-                    displayResult(data);
-                },
-                error: function () {
-                    alert("Ошибка выполнения запроса.");
-                }
-            });
-        }
-
-        function displayResult(data) {
-            var resultContainer = $("#resultContainer");
-            resultContainer.empty();
-
-            var table = $("<table>");
-            var headerRow = $("<tr>");
-            headerRow.append("<th>Колонка 1</th>");
-            headerRow.append("<th>Колонка 2</th>");
-            // Добавьте остальные колонки в соответствии с вашими данными
-
-            table.append(headerRow);
-
-            // Распарсьте данные и добавьте строки в таблицу
-
-            resultContainer.append(table);
-        }
-    </script>
-}
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Requirements</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
+</head>
+<body>
+    <h1>Запросы</h1>
+    <br>
+    <p><a href='@Url.Action("FirstReq", "Requirements")' class="button">Объем воды в тепловых сетях</a></p>
+    <br>
+    <p><a href='@Url.Action("SecondReq", "Requirements")' class="button">Тепловые сети</a></p>
+    <br>
+    <p><a href='@Url.Action("ThirdReq", "Requirements")' class="button">Стальные трубы</a></p>
+</body>
+</html>

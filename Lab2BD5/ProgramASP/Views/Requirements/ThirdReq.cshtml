@@ -1,0 +1,72 @@
+﻿@{
+    var totalLength = ViewBag.Length;
+    var pipelines = ViewBag.data as List<PipelineSection>;
+}
+@using ModelsLibrary.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Объем воды в тепловых сетях</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/Index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
+</head>
+<body>
+    <div>
+        <a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
+        <br>
+        <br>
+        <br>
+        <a href='@Url.Action("ShowTable", "Enterprise")' class="button">Список компаний</a>
+        <br>
+        <br>
+        <br>
+        <form action="/Requirements/ThirdReq" method="post" class="container">
+            <label for="enterpriseName">Название предприятия:</label>
+            <input type="text" id="enterpriseName" name="enterpriseName" required>
+
+            <label for="diameter">Диаметр:</label>
+            <input type="number" id="diameter" name="diameter" step="0.01" min="0">
+
+            <label for="thickness">Толщина:</label>
+            <input type="number" id="thickness" name="thickness" step="0.01" min="0">
+
+            <button type="submit" class="button">Отправить</button>
+        </form> <br>
+    </div>
+    @if (pipelines != null)
+    {
+        <div>
+            <h2>Общая протяжённость труб: @totalLength</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Номер секции</th>
+                    <th>Номер начального узла</th>
+                    <th>Номер конечного узла</th>
+                    <th>Длина трубопровода</th>
+                    <th>Диаметр</th>
+                    <th>Толщина</th>
+                    <th>Дата последнего ремонта</th>
+                </tr>
+
+                @foreach (PipelineSection pipeline in pipelines)
+                {
+                    <tr>
+                        <td>@pipeline.SectionId</td>
+                        <td>@pipeline.SectionNumber</td>
+                        <td>@pipeline.StartNodeNumber</td>
+                        <td>@pipeline.EndNodeNumber</td>
+                        <td>@pipeline.PipelineLength</td>
+                        <td>@pipeline.Diameter</td>
+                        <td>@pipeline.Thickness</td>
+                        <td>@pipeline.LastRepairDate</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+
+</body>
+</html>

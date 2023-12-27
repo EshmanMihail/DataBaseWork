@@ -144,7 +144,7 @@ namespace ProgramASP.Controllers
 
 		public IActionResult Search(string searchColumn, string searchText)
 		{
-			List<string> result = new();
+			List<HeatNetwork> result = new();
 
 			if (searchColumn is null || searchText is null)
 			{
@@ -173,14 +173,13 @@ namespace ProgramASP.Controllers
 			switch (searchColumn)
 			{
 				case "NetworkName":
-					result = _networks.Select(e => e.NetworkName).Where(x => x.Contains(searchText)).ToList();
+					result = _networks.Where(x => x.NetworkName.Contains(searchText)).ToList();
 					break;
 				case "NetworkNumber":
-					result = _networks
-						.Where(e => e.NetworkNumber.HasValue && e.NetworkNumber.Value.ToString().Contains(searchText))
-						.Select(e => e.NetworkNumber.Value.ToString())
-						.ToList();
-					break;
+                    result = _networks
+                            .Where(e => e.NetworkNumber.Value.ToString() == searchText)
+                            .ToList();
+                    break;
 			}
 
 
@@ -216,19 +215,18 @@ namespace ProgramASP.Controllers
 				searchSession = HttpContext.Session.Get<SessionSearchStuff>("searchSessionNetwork") ?? new SessionSearchStuff();
 			}
 
-			List<string> result = new();
+			List<HeatNetwork> result = new();
 
 			if (searchSession.isSaved || TryGetFromServer(searchSession, searchColumn, searchText))
 			{
 				switch (searchSession.columnName)
 				{
 					case "NetworkName":
-						result = _networks.Select(e => e.NetworkName).Where(x => x.Contains(searchSession.textForSearch)).ToList();
+						result = _networks.Where(x => x.NetworkName.Contains(searchSession.textForSearch)).ToList();
 						break;
 					case "NetworkNumber":
 						result = _networks
-							.Where(e => e.NetworkNumber.HasValue && e.NetworkNumber.Value.ToString().Contains(searchSession.textForSearch))
-							.Select(e => e.NetworkNumber.Value.ToString())
+							.Where(e => e.NetworkNumber.Value.ToString() == searchSession.textForSearch)
 							.ToList();
 						break;
 				}

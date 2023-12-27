@@ -10,16 +10,15 @@
     <title>Heat Station</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/Index.css" />
-    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
 </head>
 <body>
-    <a href='@Url.Action("ShowTable", "Enterprise")' class="button">Компании</a>
-    <a href='@Url.Action("ShowTable", "HeatNetwork")' class="button">Тепловые сети</a>
-    <a href='@Url.Action("ShowTable", "HeatConsumer")' class="button">Клиенты</a>
-    <a href='@Url.Action("ShowTable", "HeatWell")' class="button">Тепловые котлы</a>
-    <a href='@Url.Action("ShowTable", "HeatPoint")' class="button">Тепловые точки</a>
-    <a href='@Url.Action("ShowTable", "PipelineSection")' class="button">Трубопроводы</a>
-    <a href='@Url.Action("ShowTable", "SteelPipe")' class="button">Железные трубы</a>
+    <a href='@Url.Action("ShowTable", "Enterprise")' class="buttonn">Компании</a>
+    <a href='@Url.Action("ShowTable", "HeatNetwork")' class="buttonn">Тепловые сети</a>
+    <a href='@Url.Action("ShowTable", "HeatConsumer")' class="buttonn">Клиенты</a>
+    <a href='@Url.Action("ShowTable", "HeatWell")' class="buttonn">Тепловые котлы</a>
+    <a href='@Url.Action("ShowTable", "HeatPoint")' class="buttonn">Тепловые точки</a>
+    <a href='@Url.Action("ShowTable", "PipelineSection")' class="buttonn">Трубопроводы</a>
+    <a href='@Url.Action("ShowTable", "SteelPipe")' class="buttonn">Железные трубы</a>
     <h3>Выберите таблицу для поиска подстроки по столбцам</h3>
     <table border="1">
         <tr>
@@ -29,45 +28,45 @@
         </tr>
         <tr>
             <td>Компания</td>
-            <td><a href='@Url.Action("Search", "Enterprise")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "Enterprise")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "Enterprise")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "Enterprise")' class="buttonn">Поиск</a></td>
         </tr>
         <tr>
             <td>Сеть</td>
-            <td><a href='@Url.Action("Search", "HeatNetwork")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "HeatNetwork")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "HeatNetwork")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatNetwork")' class="buttonn">Поиск</a></td>
         </tr>
         <tr>
             <td>Клиенты</td>
-            <td><a href='@Url.Action("Search", "HeatConsumer")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "HeatConsumer")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "HeatConsumer")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatConsumer")' class="buttonn">Поиск</a></td>
         </tr>
         <tr>
             <td>Колодцы</td>
-            <td><a href='@Url.Action("Search", "HeatWell")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "HeatWell")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "HeatWell")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatWell")' class="buttonn">Поиск</a></td>
         </tr>
         <tr>
             <td>Тепловые точки</td>
-            <td><a href='@Url.Action("Search", "HeatPoint")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "HeatPoint")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "HeatPoint")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "HeatPoint")' class="buttonn">Поиск</a></td>
         </tr>
         <tr>
             <td>Трудопровод</td>
-            <td><a href='@Url.Action("Search", "PipelineSection")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "PipelineSection")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "PipelineSection")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "PipelineSection")' class="buttonn">Поиск</a></td>
         </tr>
         <tr>
             <td>Трубы</td>
-            <td><a href='@Url.Action("Search", "SteelPipe")' class="button">Поиск</a></td>
-            <td><a href='@Url.Action("Search2", "SteelPipe")' class="button">Поиск</a></td>
+            <td><a href='@Url.Action("Search", "SteelPipe")' class="buttonn">Поиск</a></td>
+            <td><a href='@Url.Action("Search2", "SteelPipe")' class="buttonn">Поиск</a></td>
         </tr>
     </table>
-    <p><a href='@Url.Action("RequirementsShow", "Requirements")' class="button">Дополнительные требования</a></p>
+    <p><a href='@Url.Action("RequirementsShow", "Requirements")' class="buttonn">Дополнительные требования</a></p>
     <div class="links">
-        <a href='@Url.Action("Login", "Account")' class="button">Вход</a>
-        <a href='@Url.Action("Logout", "Account")' class="button">Выход</a>
-        <a href='@Url.Action("Register", "Account")' class="button">Регистрация</a>
+        <a href='@Url.Action("Login", "Account")' class="buttonn">Вход</a>
+        <a href='@Url.Action("Logout", "Account")' class="buttonn">Выход</a>
+        <a href='@Url.Action("Register", "Account")' class="buttonn">Регистрация</a>
     </div>
     @if (SignInManager.IsSignedIn(User))
     {
@@ -76,9 +75,9 @@
         if (await UserManager.IsInRoleAsync(user, "Admin"))
         {
             <p><h2>Пользователь Admin</h2></p>
-            <a href='@Url.Action("UsersList", "Account")' class="button">Список пользователей</a>
-            <a href='@Url.Action("Delete", "Account")' class="button">Удалить пользователя</a>
-            <a href='@Url.Action("Update", "Account")' class="button">Изменить пользователя</a>
+            <a href='@Url.Action("UsersList", "Account")' class="buttonn">Список пользователей</a>
+            <a href='@Url.Action("Delete", "Account")' class="buttonn">Удалить пользователя</a>
+            <a href='@Url.Action("Update", "Account")' class="buttonn">Изменить пользователя</a>
         }
         else
         {

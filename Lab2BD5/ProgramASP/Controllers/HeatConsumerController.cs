@@ -129,7 +129,7 @@ namespace ProgramASP.Controllers
 
 		public IActionResult Search(string searchColumn, string searchText)
 		{
-			List<string> result = new();
+			List<HeatConsumer> result = new();
 			if (searchColumn is null || searchText is null)
             {
 				if (TryGetCookie("columnConsumer", ref searchColumn))
@@ -157,22 +157,17 @@ namespace ProgramASP.Controllers
 			switch (searchColumn)
 			{
 				case "ConsumerName":
-					result = _consumers.Where(e => e.ConsumerName != null && e.ConsumerName.Contains(searchText))
-						.Select(e => e.ConsumerName).ToList();
-					break;
-				case "NodeNumber":
-					result = _consumers
-                        .Where(e => e.NodeNumber.HasValue && e.NodeNumber.Value.ToString().Contains(searchText))
-						.Select(e => e.NodeNumber.Value.ToString())
-                        .ToList();
-					break;
-				case "CalculatedPower":
-					result = _consumers
-		                .Where(e => e.CalculatedPower.HasValue && e.CalculatedPower.Value.ToString().Contains(searchText))
-		                .Select(e => e.CalculatedPower.Value.ToString())
-		                .ToList();
-					break;
-			}
+					result = _consumers.Where(e => e.ConsumerName != null && e.ConsumerName.Contains(searchText)).ToList();
+                    break;
+                case "NodeNumber":
+                    result = _consumers.Where(e => e.NodeNumber.ToString() == searchText).ToList();
+                    break;
+                case "CalculatedPower":
+                    result = _consumers
+                   .Where(e => e.CalculatedPower.ToString() == searchText)
+                   .ToList();
+                    break;
+            }
 
 			ViewBag.data = result;
 
@@ -206,23 +201,22 @@ namespace ProgramASP.Controllers
 				searchSession = HttpContext.Session.Get<SessionSearchStuff>("searchSessionConsumer") ?? new SessionSearchStuff();
 			}
 
-			List<string> result = new();
+			List<HeatConsumer> result = new();
 
 			if (searchSession.isSaved || TryGetFromServer(searchSession, searchColumn, searchText))
             {
                 switch (searchSession.columnName)
                 {
                     case "ConsumerName":
-						result = _consumers.Where(e => e.ConsumerName != null && e.ConsumerName.Contains(searchSession.textForSearch))
-						.Select(e => e.ConsumerName).ToList();
+						result = _consumers.Where(e => e.ConsumerName != null && e.ConsumerName.Contains(searchSession.textForSearch)).ToList();
 						break;
-                    case "ManagementOrganization":
-                        result = _consumers.Where(e => e.NodeNumber.HasValue && e.NodeNumber.Value.ToString().Contains(searchSession.textForSearch))
-                            .Select(e => e.NodeNumber.Value.ToString()).ToList();
+                    case "NodeNumber":
+                        result = _consumers.Where(e => e.NodeNumber.ToString() == searchSession.textForSearch).ToList();
                         break;
                     case "CalculatedPower":
-                        result = _consumers.Select(e => e.CalculatedPower).Where(x => x.HasValue && x.Value.ToString().Contains(searchSession.textForSearch))
-                            .Select(x => x.Value.ToString()).ToList();
+                        result = _consumers
+                       .Where(e => e.CalculatedPower.ToString() == searchSession.textForSearch)
+                       .ToList();
                         break;
                 }
             }

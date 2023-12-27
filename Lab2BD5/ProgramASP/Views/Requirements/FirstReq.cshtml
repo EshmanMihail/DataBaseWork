@@ -1,0 +1,34 @@
+﻿@{
+    var waterVolumes = ViewBag.Result as List<object>;
+}
+@using ModelsLibrary.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Объем воды в тепловых сетях</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/Index.css" />
+</head>
+<body>
+    <a href='@Url.Action("Index", "Home")' class="buttonn">Вернуться на главную</a>
+    <h1>Результат</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Имя сети</th>
+                <th>Объем воды</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in waterVolumes)
+            {
+                <tr>
+                    <td>@(item.GetType().GetProperty("NetworkName").GetValue(item, null))</td>
+                    <td>@(item.GetType().GetProperty("WaterVolume").GetValue(item, null))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
