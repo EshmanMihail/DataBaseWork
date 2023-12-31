@@ -54,19 +54,22 @@ namespace ProgramASP.Controllers
             if (sectionId > 0 && sectionNumber > 0 && heatPointFirst != null && heatPointSecond != null
                 && pipelineLength > 0 && diameter > 0 && thickness > 0)
             {
-                var pipelineToUpdate = _pipelines.Find(x => x.ID == sectionId);
-                pipelineToUpdate.SectionNumber = sectionNumber;
-                pipelineToUpdate.StartNodeNumber = startNodeNumber;
-                pipelineToUpdate.EndNodeNumber= endNodeNumber;
-                pipelineToUpdate.PipelineLength = pipelineLength;
-                pipelineToUpdate.Diameter = diameter;
-                pipelineToUpdate.Thickness = thickness;
-                pipelineToUpdate.LastRepairDate = lastRepairDate;
+               var pipelineToUpdate = _pipelines.Find(x => x.ID == sectionId);
+               if (pipelineToUpdate != null)
+                {
+                    pipelineToUpdate.SectionNumber = sectionNumber;
+                    pipelineToUpdate.StartNodeNumber = startNodeNumber;
+                    pipelineToUpdate.EndNodeNumber = endNodeNumber;
+                    pipelineToUpdate.PipelineLength = pipelineLength;
+                    pipelineToUpdate.Diameter = diameter;
+                    pipelineToUpdate.Thickness = thickness;
+                    pipelineToUpdate.LastRepairDate = lastRepairDate;
 
-                var pipelineToUpdateInBD = db.PipelineSections.Find(sectionId);
-                pipelineToUpdateInBD = pipelineToUpdate;
+                    var pipelineToUpdateInBD = db.PipelineSections.Find(sectionId);
+                    pipelineToUpdateInBD = pipelineToUpdate;
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                } 
             }
 
             ViewBag.data = _pipelines;
