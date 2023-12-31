@@ -20,12 +20,6 @@ namespace ProgramASP.Controllers
             _networks = db.HeatNetworks.Include(x => x.Enterprise).ToList();
         }
 
-        //[ResponseCache(Duration = CacheDuration)]
-        //public IActionResult ShowTable()
-        //{
-        //    ViewBag.data = _networks;
-        //    return View();
-        //}
         [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
         public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
@@ -49,19 +43,19 @@ namespace ProgramASP.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Update(int networkId, string networkName, int networkNumber, int enterpriseId, string networkType) 
+        public IActionResult Update(int id, string networkName, int networkNumber, int enterpriseId, string networkType) 
         {
             var PageNumber = HttpContext.Request.Query["PageNumber"];
             var enterprise = db.Enterprises.Find(enterpriseId);
-            if (networkId != 0 && networkName != null && networkNumber > 0 && enterprise != null && networkType != null)
+            if (id != 0 && networkName != null && networkNumber > 0 && enterprise != null && networkType != null)
             {
-                var networkToUpdate = _networks.Find(x => x.ID == networkId);
+                var networkToUpdate = _networks.Find(x => x.ID == id);
                 networkToUpdate.NetworkName = networkName;
                 networkToUpdate.NetworkNumber = networkNumber;
                 networkToUpdate.EnterpriseId = enterpriseId;
                 networkToUpdate.NetworkType = networkType;
 
-                var networkToUpdateInBD = db.HeatNetworks.Find(networkId);
+                var networkToUpdateInBD = db.HeatNetworks.Find(id);
                 networkToUpdateInBD = networkToUpdate;
 
                 db.SaveChanges();

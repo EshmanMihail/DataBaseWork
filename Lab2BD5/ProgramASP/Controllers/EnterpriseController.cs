@@ -20,12 +20,6 @@ namespace ProgramASP.Controllers
             _enterprises = db.Enterprises.ToList();
         }
 
-        //[ResponseCache(Duration = CacheDuration)]
-        //public IActionResult ShowTable()
-        //{
-        //    ViewBag.data = _enterprises;
-        //    return View();
-        //}
         [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
         public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
@@ -47,18 +41,18 @@ namespace ProgramASP.Controllers
             return View();
         }
 
-    [HttpPost]
+        [HttpPost]
         [Authorize]
-        public IActionResult Update(int enterpriceId, string name, string organization)
+        public IActionResult Update(int id, string name, string organization)
         {
             var PageNumber = HttpContext.Request.Query["PageNumber"];
-            if (enterpriceId != 0 && name != null && organization != null)
+            if (id != 0 && name != null && organization != null)
             {
-                var enterpriseToUpdate = _enterprises.Find(x => x.ID == enterpriceId);
+                var enterpriseToUpdate = _enterprises.Find(x => x.ID == id);
                 enterpriseToUpdate.EnterpriseName = name;
                 enterpriseToUpdate.ManagementOrganization = organization;
 
-                var enterepriseToUpdateInBD = db.Enterprises.Find(enterpriceId);
+                var enterepriseToUpdateInBD = db.Enterprises.Find(id);
                 enterepriseToUpdateInBD = enterpriseToUpdate;
 
                 db.SaveChanges();
@@ -132,6 +126,7 @@ namespace ProgramASP.Controllers
                 db.HeatNetworks.RemoveRange(networks);
 
                 db.Enterprises.Remove(enterprise);
+
                 db.SaveChanges();
             }
             return RedirectToAction("ShowTable", "Enterprise");

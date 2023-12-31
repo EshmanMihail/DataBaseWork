@@ -23,8 +23,31 @@
                     $("#selected-data [name='enterpriceId']").val(id);
                     $("#selected-data [name='name']").val(name);
                     $("#selected-data [name='organization']").val(organization);
+
+                    var form = $("#update-form");
+                    form.attr("action", "/Enterprise/Update/" + id);
+                    form.attr("method", "post");
                 }
             );
+        });
+        $(document).ready(function () {
+            $('.delete-button').click(function () {
+                var id = $(this).data('id');
+                var row = $(this).closest('tr');
+
+                $.ajax({
+                    url: '/Enterprise/Delete',
+                    type: 'POST',
+                    data: { enterpriceId: id },
+                    success: function (result) {
+                        console.log(result);
+                        row.remove();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
         });
     </script>
     <style>
@@ -35,6 +58,10 @@
         .table-container {
             margin-right: 20px;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
     <link rel="stylesheet" type="text/css" href="/css/Index.css" />
@@ -42,34 +69,35 @@
 <body>
         <p>
             <a href='@Url.Action("Create", "Enterprise")' class="button">Добавить компанию</a>
-            <a href='@Url.Action("Delete", "Enterprise")' class="button">Удалить компанию</a>
+            @*<a href='@Url.Action("Delete", "Enterprise")' class="button">Удалить компанию</a>*@
             <a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
         </p>
     <h3>Список компаний</h3>
     <div class="containerr">
         <div class="table-container">
-            <table>
+            <table id ="enterprise-table">
                 <tr>
-                    <th>Код</th>
                     <th>Название</th>
                     <th>Организация</th>
+                    <th>Действия</th>
                     <th>Действия</th>
                 </tr>
 
                 @foreach (Enterprise enterprise in enterprises)
                 {
                     <tr>
-                        <td class="enterprise-id">@enterprise.ID</td>
+                        <td class="enterprise-id hidden">@enterprise.ID</td>
                         <td class="enterprise-name">@enterprise.EnterpriseName</td>
                         <td class="management-organization">@enterprise.ManagementOrganization</td>
-                        <td><button class="edit-button">Редактировать</button></td>
+                        <td><button class="edit-button" data-id="@enterprise.ID">Редактировать</button></td>
+                        <td><button class="delete-button" data-id="@enterprise.ID">Удалить</button></td>
                     </tr>
                 }
             </table>
         </div>
         <div id="selected-data">
             <h2>Выбранные данные</h2>
-            <form action="/Enterprise/Update" method="post" class="container">
+            <form id="update-form" action="/Enterprise/Update" method="post" class="container">
                 <label for="name">Название:</label>
                 <input type="text" name="name" required>
                 <br>

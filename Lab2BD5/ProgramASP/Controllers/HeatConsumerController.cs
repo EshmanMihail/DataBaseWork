@@ -19,12 +19,6 @@ namespace ProgramASP.Controllers
             _consumers = db.HeatConsumers.Include(x => x.Network).ToList();
         }
 
-        //[ResponseCache(Duration = CacheDuration)]
-        //public IActionResult ShowTable()
-        //{
-        //    ViewBag.data = _consumers;
-        //    return View();
-        //}
         [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
         public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {

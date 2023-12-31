@@ -30,6 +30,25 @@
                 }
             );
         });
+        $(document).ready(function () {
+            $('.delete-button').click(function () {
+                var id = $(this).data('id');
+                var row = $(this).closest('tr');
+
+                $.ajax({
+                    url: '/HeatConsumer/Delete',
+                    type: 'POST',
+                    data: { consumerId: id },
+                    success: function (result) {
+                        console.log(result);
+                        row.remove();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
     </script>
     <style>
         .containerr {
@@ -39,6 +58,10 @@
         .table-container {
             margin-right: 20px;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
     <link rel="stylesheet" type="text/css" href="/css/Index.css" />
@@ -46,7 +69,7 @@
 <body>
         <p>
             <a href='@Url.Action("Create", "HeatConsumer")' class="button">Добавить потребителя</a>
-            <a href='@Url.Action("Delete", "HeatConsumer")' class="button">Удалить потребителя</a>
+            @*<a href='@Url.Action("Delete", "HeatConsumer")' class="button">Удалить потребителя</a>*@
             <a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
         </p>
     <h3>Список потребителей</h3>
@@ -54,25 +77,26 @@
         <div class="table-container">
             <table>
                 <tr>
-                    <th>Код</th>
                     <th>Имя</th>
                     <th>Код сети</th>
                     <th>Имя сети</th>
                     <th>Номер узла</th>
                     <th>Расчетная мощность</th>
                     <th>Действия</th>
+                    <th>Действия</th>
                 </tr>
 
                 @foreach (HeatConsumer consumer in heatConsumers)
                 {
                     <tr>
-                        <td class="consumer-id">@consumer.ConsumerId</td>
+                        <td class="consumer-id  hidden">@consumer.ConsumerId</td>
                         <td class="consumer-name">@consumer.ConsumerName</td>
                         <td class="network-id">@consumer.NetworkId</td>
                         <td>@consumer.Network?.NetworkName</td>
                         <td class="node-number">@consumer.NodeNumber</td>
                         <td class="calculated-power">@consumer.CalculatedPower</td>
                         <td><button class="edit-button">Редактировать</button></td>
+                        <td><button class="delete-button" data-id="@consumer.ConsumerId">Удалить</button></td>
                     </tr>
                 }
             </table>
@@ -80,6 +104,7 @@
         <div id="selected-data">
             <h2>Выбранные данные</h2>
             <form action="/HeatConsumer/Update" method="post" class="container">
+                <input name="consumerId" readonly type="hidden">
                 <label for="consumerName">Название:</label>
                 <input type="text" name="consumerName" required>
                 <br>
@@ -92,7 +117,7 @@
                 <label for="calculatedPower">Расчетная мощность:</label>
                 <input type="number" name="calculatedPower" step="0.01" required>
                 <br>
-                <input type="hidden" value="@pageNumber" name="PageNumber" />
+                <input type="hidden" value="@pageNumber" name="PageNumber"/>
                 <button type="submit" class="button">Сохранить</button>
             </form>
         </div>
