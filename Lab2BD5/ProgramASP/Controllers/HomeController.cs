@@ -7,7 +7,7 @@ namespace ProgramASP.Controllers
     public class HomeController : Controller
     {
         private HeatSchemeStorageContext context;
-        private List<string> list = new List<string>() { "huy", "zalupa", "penis", "chlen" };
+        private List<string> list = new List<string>() { };
         public HomeController([FromServices] HeatSchemeStorageContext context)
         {
             this.context = context;

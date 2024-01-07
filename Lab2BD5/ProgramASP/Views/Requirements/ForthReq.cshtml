@@ -1,0 +1,58 @@
+﻿@{
+    var pipelines = ViewBag.data as List<PipelineSection>;
+}
+@using ModelsLibrary.Models;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Объем воды в тепловых сетях</title>
+    <meta charset="utf-8" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/Index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/EnterpriseCreateDelete.css" />
+</head>
+<body>
+    <div>
+        <a href='@Url.Action("Index", "Home")' class="button">Вернуться на главную</a>
+        <br>
+        <br>
+        <br>
+        <form method="post" action="/Requirements/ForthReq" class="container">
+            <label for="startDate">Начальная дата:</label>
+            <input type="date" id="startDate" name="startDate" required>
+
+            <label for="endDate">Конечная дата:</label>
+            <input type="date" id="endDate" name="endDate" required>
+
+            <button type="submit" class="button">Поиск</button>
+        </form> <br>
+    </div>
+    @if (pipelines != null)
+    {
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                    <th>Длина участка трубопровода</th>
+                    <th>Типо размер участка</th>
+                    <th>Имя сети</th>
+                    <th>Имя предпреятия</th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    @foreach (var sections in pipelines)
+                    {
+                        <tr>
+                            <td>@sections.PipelineLength</td>
+                            <td>@sections.Thickness</td>
+                            <td>@sections.StartNodeNumberNavigation?.Network?.NetworkName</td>
+                            <td>@sections.StartNodeNumberNavigation?.Network?.Enterprise?.EnterpriseName</td>
+                        </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</body>
+</html>

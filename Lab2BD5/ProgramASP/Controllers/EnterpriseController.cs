@@ -23,6 +23,16 @@ namespace ProgramASP.Controllers
         [ResponseCache(Duration = CacheDuration, VaryByQueryKeys = new[] { "pageNumber" })]
         public async Task<IActionResult> ShowTable(int pageNumber = 1)
         {
+            var searchedEnterprises = HttpContext.Session.Get<List<Enterprise>>("SearchedEnterprises");
+            if (searchedEnterprises != null && searchedEnterprises.Count > 0)
+            {
+                var dataFiltred = searchedEnterprises.ToList();
+                ViewBag.DbContext = db;
+                ViewBag.data = dataFiltred;
+                ViewBag.pageNumber = 1;
+                ViewBag.totalPages = 1;
+                return View();
+            }
             var query = db.Enterprises.AsQueryable();
 
             int total = await query.CountAsync();
@@ -40,6 +50,38 @@ namespace ProgramASP.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public IActionResult SerchInfo(string searchColumn, string searchText)
+        {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
+            List<Enterprise> resaltSerch = new List<Enterprise>();
+            if (searchText != null)
+            {
+                switch (searchColumn)
+                {
+                    case "EnterpriseName":
+                        resaltSerch = _enterprises.Where(x => x.EnterpriseName.Contains(searchText)).ToList();
+                        break;
+                    case "ManagementOrganization":
+                        resaltSerch = _enterprises.Where(e => e.ManagementOrganization.Contains(searchText)).ToList();
+                        break;
+                }
+                HttpContext.Session.Set("SearchedEnterprises", resaltSerch);
+                return RedirectToAction("ShowTable", "Enterprise", new { pageNumber = PageNumber });
+            }
+            return RedirectToAction("ShowTable", "Enterprise", new { pageNumber = PageNumber });
+        }
+
+        [HttpPost]
+        public IActionResult CancelFilter()
+        {
+            var PageNumber = HttpContext.Request.Query["PageNumber"];
+            HttpContext.Session.Remove("SearchedEnterprises");
+            return RedirectToAction("ShowTable", "Enterprise", new { pageNumber = PageNumber });
+        }
+
+
 
         [HttpPost]
         [Authorize]

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ModelsLibrary.Models;
 
 namespace ProgramASP.Controllers
@@ -162,6 +163,31 @@ namespace ProgramASP.Controllers
             }
             ViewBag.data = resault;
             ViewBag.Length = totalLength;
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForthReq()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForthReq(DateTime startDate, DateTime endDate) 
+        {
+            var start = new DateOnly(startDate.Year, startDate.Month, startDate.Day);
+            var end = new DateOnly(endDate.Year, endDate.Month, endDate.Day);
+
+            var data = db.PipelineSections
+                .Where(section => section.LastRepairDate >= start && section.LastRepairDate <= end)
+                .Include(section => section.StartNodeNumberNavigation.Network)
+                .ThenInclude(network => network.Enterprise)
+                .Include(section => section.EndNodeNumberNavigation.Network)
+                .ThenInclude(network => network.Enterprise)
+                .ToList();
+
+            ViewBag.data = data;
+
             return View();
         }
     }
