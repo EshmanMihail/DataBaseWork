@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsLibrary", "ModelsLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfoStruct", "InfoStruct\InfoStruct.csproj", "{661DD3F5-B4EC-482C-9ED0-C13F463ABDB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramWebApi", "ProgramWebApi\ProgramWebApi.csproj", "{1E3B79CF-14BF-4950-A17A-386A51939506}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{661DD3F5-B4EC-482C-9ED0-C13F463ABDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{661DD3F5-B4EC-482C-9ED0-C13F463ABDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{661DD3F5-B4EC-482C-9ED0-C13F463ABDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E3B79CF-14BF-4950-A17A-386A51939506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3B79CF-14BF-4950-A17A-386A51939506}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E3B79CF-14BF-4950-A17A-386A51939506}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E3B79CF-14BF-4950-A17A-386A51939506}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
